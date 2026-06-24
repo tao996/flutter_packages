@@ -1,0 +1,17 @@
+# Dart/Flutter
+.dart_tool/
+.packages
+build/
+pubspec.lock
+*.iml
+.idea/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Python scripts (temp)
+*.py
+!scripts/
+
+tmp.md

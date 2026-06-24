@@ -1,0 +1,17 @@
+{
+    "dart.analysisExcludedFolders": [
+        "tao996",
+        "jbook"
+    ],
+    // 2. 在“问题面板 (Problems)”和全局搜索中屏蔽它（彻底解决一片红的报错）
+    "search.exclude": {
+        "tao996": true,
+        "jbook": true
+    },
+
+    // 3. 禁止文件监视器追踪它（节约内存和 CPU）
+    "files.watcherExclude": {
+        "tao996": true,
+        "jbook":true
+    },
+}
