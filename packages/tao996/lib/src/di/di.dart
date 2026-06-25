@@ -2,12 +2,12 @@
 ///
 /// 所有服务通过此容器注册和获取。
 /// 容器只在组装阶段（main()）使用，业务代码通过构造函数接收依赖。
-class Di {
+class MyDi {
   final Map<Type, _ServiceFactory<Object>> _factories = {};
   final Map<Type, Object> _singletons = {};
   final Map<Type, Object> _lazyCache = {};
 
-  Di();
+  MyDi();
 
   /// 注册一个单例实例。
   void registerSingleton<T extends Object>(T instance) {

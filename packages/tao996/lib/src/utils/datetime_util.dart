@@ -8,12 +8,12 @@ final RegExp _iso8601Regex = RegExp(
 );
 
 /// 日期时间工具。
-class DatetimeUtil {
-  const DatetimeUtil();
+class MyDatetimeUtil {
+  MyDatetimeUtil._();
 
   /// 仅使用正则表达式检查字符串是否匹配 toIso8601String() 的格式。
   /// 注意：此方法不验证日期（如 2025-02-30）或时间（如 25:00:00）的有效性。
-  bool isIso8601FormatRegex(dynamic input) {
+  static bool isIso8601FormatRegex(dynamic input) {
     if (input == null || input is! String) {
       return false;
     }
@@ -23,21 +23,21 @@ class DatetimeUtil {
   /// 格式化 DateTime 为字符串。
   /// `pattern` 占位符: `yyyy`=年, `MM`=月, `dd`=日, `HH`=时(24h), `mm`=分, `ss`=秒。
   /// 示例: `format(now, 'yyyy-MM-dd')` → `"2026-06-05"`
-  String format(DateTime date, String pattern) {
+  static String format(DateTime date, String pattern) {
     return pattern
-        .replaceAll('yyyy', _pad(date.year, 4))
-        .replaceAll('MM', _pad(date.month, 2))
-        .replaceAll('dd', _pad(date.day, 2))
-        .replaceAll('HH', _pad(date.hour, 2))
-        .replaceAll('mm', _pad(date.minute, 2))
-        .replaceAll('ss', _pad(date.second, 2));
+        .replaceAll('yyyy', MyTextUtil.padZero(date.year, 4))
+        .replaceAll('MM', MyTextUtil.padZero(date.month, 2))
+        .replaceAll('dd', MyTextUtil.padZero(date.day, 2))
+        .replaceAll('HH', MyTextUtil.padZero(date.hour, 2))
+        .replaceAll('mm', MyTextUtil.padZero(date.minute, 2))
+        .replaceAll('ss', MyTextUtil.padZero(date.second, 2));
   }
 
   /// 解析 微秒/毫秒/日期/字符串 为 DateTime。
   ///
   /// 支持 ISO-8601 格式 (`2026-06-05T10:30:00`) 和标准日期格式 (`2026-06-05`)。
   /// [formatPattern] 如果是字符串，支持自定义 data 的格式
-  DateTime? parse(dynamic data, {String? formatPattern}) {
+  static DateTime? parse(dynamic data, {String? formatPattern}) {
     if (data == null || data == "") {
       return null;
     }
@@ -89,20 +89,20 @@ Z: 解析时区偏移。intl 包的 DateFormat 能够识别 RFC 822 格式中的
   }
 
   /// 返回今天的日期（不含时间）。
-  DateTime today() => DateTime(now().year, now().month, now().day);
-
-  /// 返回当前时间。
-  DateTime now() => DateTime.now();
+  static DateTime today() {
+    final now = DateTime.now();
+    return DateTime(now.year, now.month, now.day);
+  }
 
   /// 计算两个日期之间的天数差（取绝对值）。
-  int daysBetween(DateTime a, DateTime b) => DateTime(
+  static int daysBetween(DateTime a, DateTime b) => DateTime(
     a.year,
     a.month,
     a.day,
   ).difference(DateTime(b.year, b.month, b.day)).inDays.abs();
 
   /// 获取两个时间之间的年份，通常用来计算年龄
-  int yearBetween(DateTime? a, DateTime? b) {
+  static int yearBetween(DateTime? a, DateTime? b) {
     if (a != null) {
       if (b != null) {
         return b.year - a.year;
@@ -113,9 +113,8 @@ Z: 解析时区偏移。intl 包的 DateFormat 能够识别 RFC 822 格式中的
     return 0;
   }
 
-  String _pad(int value, int length) => value.toString().padLeft(length, '0');
   // 比较方法
-  int compareTo(dynamic a, dynamic b) {
+  static int compareTo(dynamic a, dynamic b) {
     if (a == null || a == '') {
       return -1;
     } else if (b == null || b == '') {
@@ -139,7 +138,7 @@ Z: 解析时区偏移。intl 包的 DateFormat 能够识别 RFC 822 格式中的
   /// [l10] 10 位的时间戳，用于 php 之类的；
   /// [l13] 13 位毫秒级时间戳（自 Unix 纪元（1970-01-01 00:00:00 UTC）以来的毫秒数）
   /// 默认为 16 位微秒级时间戳（自 Unix 纪元以来的微秒数，1毫秒=1000微秒）
-  int timestamp(DateTime dt, {bool l10 = false, bool l13 = false}) {
+  static int timestamp(DateTime dt, {bool l10 = false, bool l13 = false}) {
     if (l10) {
       return dt.millisecondsSinceEpoch % 1000;
     } else if (l13) {
@@ -149,7 +148,7 @@ Z: 解析时区偏移。intl 包的 DateFormat 能够识别 RFC 822 格式中的
   }
 
   // 格式化分钟数
-  String humanMinutes(int totalMinutes) {
+  static String humanMinutes(int totalMinutes) {
     if (totalMinutes <= 0) return '';
     final hours = totalMinutes ~/ 60;
     final minutes = totalMinutes % 60;

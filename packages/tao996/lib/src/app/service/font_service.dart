@@ -1,10 +1,10 @@
 import 'package:tao996/tao996.dart';
 
 /// 字体服务 — 字体大小管理。
-class FontService {
+class MyFontService {
   final Rx<double> _fontSize = Rx<double>(14.0);
 
-  FontService({double initialSize = 14.0}) {
+  MyFontService({double initialSize = 14.0}) {
     _fontSize.value = initialSize;
   }
 

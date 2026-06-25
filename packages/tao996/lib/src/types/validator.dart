@@ -1,4 +1,4 @@
-import 'package:tao996/src/translation/translation.dart';
+import 'package:tao996/src/translation/extension.dart';
 
 /// 数据校验器 — 链式调用，纯 Dart。
 ///
@@ -13,7 +13,7 @@ import 'package:tao996/src/translation/translation.dart';
 ///   print(result.errors);  // ['请输入姓名', '邮箱格式不正确']
 /// }
 /// ```
-class Validator {
+class MyValidator {
   final List<String> _errors = [];
 
   /// 获取所有错误信息。
@@ -29,102 +29,72 @@ class Validator {
   void reset() => _errors.clear();
 
   /// 必填校验。
-  Validator required(String? value, String fieldName) {
+  MyValidator required(String? value, String fieldName) {
     if (value == null || value.trim().isEmpty) {
-      _errors.add(
-        i18n('validate.required', '请输入 @name', params: {'name': fieldName}),
-      );
+      _errors.add(fieldName.mustRequired);
     }
     return this;
   }
 
   /// 邮箱格式校验。
-  Validator email(String? value, String fieldName) {
+  MyValidator email(String? value, String fieldName) {
     if (value == null || value.trim().isEmpty) return this;
     final regex = RegExp(r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$');
     if (!regex.hasMatch(value.trim())) {
-      _errors.add(
-        i18n('validate.email', '@name 邮箱格式错误', params: {"name": fieldName}),
-      );
+      _errors.add(fieldName.mustEmail);
     }
     return this;
   }
 
   /// 手机号格式校验（中国大陆 11 位）。
-  Validator phone(String? value, String fieldName) {
+  MyValidator phone(String? value, String fieldName) {
     if (value == null || value.trim().isEmpty) return this;
     final regex = RegExp(r'^1[3-9]\d{9}$');
     if (!regex.hasMatch(value.trim())) {
-      _errors.add(
-        i18n('validate.phone', '@name 手机格式错误', params: {'name': fieldName}),
-      );
+      _errors.add(fieldName.mustPhone);
     }
     return this;
   }
 
   /// 验证用户输入的 [pattern] 是否为一个有效的正则表达式；注意跟原始字符串的区别
-  Validator regexPattern(String pattern, String fileName) {
+  MyValidator regexPattern(String pattern, String fieldName) {
     if ((pattern.startsWith('r"') && pattern.endsWith('"')) ||
         (pattern.startsWith("r'") && pattern.endsWith("'"))) {
     } else {
-      _errors.add(
-        i18n(
-          'validate.pattern',
-          '不是一个有效的正则表达式:@name',
-          params: {'name': fileName},
-        ),
-      );
+      _errors.add(fieldName.mustRegexPattern);
     }
     return this;
   }
 
   /// 最小长度校验。
-  Validator minLength(String? value, int min, String fieldName) {
+  MyValidator minLength(String? value, int min, String fieldName) {
     if (value == null) return this;
     if (value.length < min) {
-      _errors.add(
-        i18n(
-          'validate.minLength',
-          '@name 不能少于 @value 个字符',
-          params: {'name': fieldName, 'value': min},
-        ),
-      );
+      _errors.add(fieldName.minLength(min));
     }
     return this;
   }
 
   /// 最大长度校验。
-  Validator maxLength(String? value, int max, String fieldName) {
+  MyValidator maxLength(String? value, int max, String fieldName) {
     if (value == null) return this;
     if (value.length > max) {
-      _errors.add(
-        i18n(
-          'validate.maxLength',
-          '@name 不能少于 @value 个字符',
-          params: {'name': fieldName, 'value': max},
-        ),
-      );
+      _errors.add(fieldName.maxLength(max));
     }
     return this;
   }
 
   /// 数字范围校验。
-  Validator range(num? value, num min, num max, String fieldName) {
+  MyValidator range(num? value, num min, num max, String fieldName) {
     if (value == null) return this;
     if (value < min || value > max) {
-      _errors.add(
-        i18n(
-          'validate.range',
-          '@name 必须在 @min 到 @max 之间',
-          params: {'name': fieldName, 'min': min, 'max': max},
-        ),
-      );
+      _errors.add(fieldName.mustBetween(min, max));
     }
     return this;
   }
 
   /// 正则匹配校验。
-  Validator matches(String? value, RegExp regex, String message) {
+  MyValidator matches(String? value, RegExp regex, String message) {
     if (value == null || value.trim().isEmpty) return this;
     if (!regex.hasMatch(value.trim())) {
       _errors.add(message);
@@ -133,7 +103,7 @@ class Validator {
   }
 
   /// 自定义校验。
-  Validator check(bool condition, String message) {
+  MyValidator check(bool condition, String message) {
     if (!condition) _errors.add(message);
     return this;
   }
@@ -157,7 +127,5 @@ class ValidationResult {
   bool get isInvalid => errors.isNotEmpty;
 
   @override
-  String toString() => isValid
-      ? i18n('valid', '验证通过')
-      : i18n('invalid', '验证失败:@reason', params: {'reason': errors.toString()});
+  String toString() => isValid ? ttValid : errors.toString().invalid;
 }

@@ -2,9 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
 /// 消息服务 — 提示 Toast / SnackBar。
-class MessageService {
+class MyMessageHelper {
+  MyMessageHelper._();
+
   /// 显示成功提示。
-  void success(String message) {
+  static void success(String message) {
     Fluttertoast.showToast(
       msg: message,
       backgroundColor: Colors.green,
@@ -14,7 +16,7 @@ class MessageService {
   }
 
   /// 显示错误提示。
-  void error(String message) {
+  static void error(String message) {
     Fluttertoast.showToast(
       msg: message,
       backgroundColor: Colors.red,
@@ -24,7 +26,7 @@ class MessageService {
   }
 
   /// 显示普通提示。
-  void info(String message) {
+  static void info(String message) {
     Fluttertoast.showToast(
       msg: message,
       backgroundColor: Colors.blue,
@@ -34,7 +36,7 @@ class MessageService {
   }
 
   /// 显示警告提示。
-  void warning(String message) {
+  static void warning(String message) {
     Fluttertoast.showToast(
       msg: message,
       backgroundColor: Colors.orange,

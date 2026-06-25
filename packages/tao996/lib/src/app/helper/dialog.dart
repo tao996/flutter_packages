@@ -3,11 +3,11 @@ import 'package:tao996/tao996.dart';
 
 /// 对话框工具类。
 /// 替代 GetX 中依赖 Get.dialog / Get.back 的版本。
-class DialogHelper {
-  const DialogHelper();
+class MyDialogHelper {
+  MyDialogHelper._();
 
   /// 对话框标题行。
-  Widget title(
+  static Widget title(
     BuildContext context,
     String title, {
     Widget? titleWidget,
@@ -38,7 +38,7 @@ class DialogHelper {
   }
 
   /// 打开全屏对话框。
-  Future<dynamic> fullScreenDialog(
+  static Future<dynamic> fullScreenDialog(
     BuildContext context, {
     required Widget child,
     double? width,
@@ -67,7 +67,7 @@ class DialogHelper {
   }
 
   /// 打开普通对话框。
-  Future<dynamic> open(
+  static Future<dynamic> open(
     BuildContext context, {
     required Widget child,
     double? width,
@@ -95,7 +95,7 @@ class DialogHelper {
   }
 
   /// 表单对话框。
-  Future<void> form(
+  static Future<void> form(
     BuildContext context, {
     required String title,
     required List<Widget> children,
@@ -142,7 +142,7 @@ class DialogHelper {
     );
   }
 
-  Widget titleRow(
+  static Widget titleRow(
     BuildContext context,
     String title, {
     VoidCallback? onDelete,
@@ -165,7 +165,7 @@ class DialogHelper {
   }
 
   /// 单选列表对话框。
-  void radioList<T>({
+  static void radioList<T>({
     required BuildContext context,
     required String title,
     required List<KV<T>> items,
@@ -215,7 +215,7 @@ class DialogHelper {
   }
 
   /// 底部弹出面板。
-  Future<T?> showBottomSheet<T>(
+  static Future<T?> showBottomSheet<T>(
     BuildContext context, {
     required Widget child,
     bool scrollView = false,
@@ -235,7 +235,7 @@ class DialogHelper {
   }
 
   /// 顶部滑入面板。
-  Future<T?> showTopSheet<T>(
+  static Future<T?> showTopSheet<T>(
     BuildContext context, {
     required Widget child,
     bool scrollView = true,
@@ -274,7 +274,7 @@ class DialogHelper {
 
   /// 显示加载对话框。返回一个关闭函数
   /// 如果设置了 [timeout]，则会自动关闭
-  Future<void Function()> loading(
+  static Future<void Function()> loading(
     BuildContext context, {
     String? message,
     bool barrierDismissible = false,
@@ -289,7 +289,7 @@ class DialogHelper {
   }
 
   /// 在异步操作 [operation] 完成后自动关闭加载框。
-  Future<T> loadingWrap<T>(
+  static Future<T> loadingWrap<T>(
     BuildContext context,
     Future<T> Function() operation, {
     String? message,

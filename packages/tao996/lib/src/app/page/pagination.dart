@@ -19,15 +19,11 @@ abstract class MyPaginationController<T> {
 }
 
 /// PC 端分页组件。
-class MyPaginationWidget extends StatelessWidget {
+class MyPagination extends StatelessWidget {
   final MyPaginationController controller;
   final bool showTotalPages;
 
-  const MyPaginationWidget(
-    this.controller, {
-    super.key,
-    this.showTotalPages = true,
-  });
+  const MyPagination(this.controller, {super.key, this.showTotalPages = true});
 
   @override
   Widget build(BuildContext context) {

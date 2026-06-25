@@ -5,23 +5,23 @@ import 'package:tao996/tao996.dart';
 ///
 /// 提供 GET / POST / HEAD / download 等常用方法。
 /// 自动检查网络状态，失败时返回 [Result.err]。
-class HttpService {
+class MyHttpService {
   final Dio _dio;
-  final NetworkService _network;
+  final MyNetworkService _network;
 
-  HttpService({required Dio dio, required NetworkService network})
+  MyHttpService({required Dio dio, required MyNetworkService network})
     : _dio = dio,
       _network = network;
 
   /// GET 请求。
-  Future<Result<T, String>> get<T>(
+  Future<MyResult<T, String>> get<T>(
     String url, {
     Map<String, dynamic>? params,
     Options? options,
     CancelToken? cancelToken,
   }) async {
     if (!_network.isOnline()) {
-      return Result.err(i18n('networkOffline', '网络未连接'));
+      return MyResult.err(i18n('networkOffline', '网络未连接'));
     }
     try {
       final resp = await _dio.get(
@@ -30,14 +30,14 @@ class HttpService {
         options: options,
         cancelToken: cancelToken,
       );
-      return Result.ok(resp.data as T);
+      return MyResult.ok(resp.data as T);
     } catch (e) {
-      return Result.err(e.toString());
+      return MyResult.err(e.toString());
     }
   }
 
   /// POST 请求。
-  Future<Result<T, String>> post<T>(
+  Future<MyResult<T, String>> post<T>(
     String url, {
     dynamic data,
     Map<String, dynamic>? params,
@@ -47,7 +47,7 @@ class HttpService {
     void Function(int, int)? onReceiveProgress,
   }) async {
     if (!_network.isOnline()) {
-      return Result.err(i18n('networkOffline', '网络未连接'));
+      return MyResult.err(i18n('networkOffline', '网络未连接'));
     }
     try {
       final resp = await _dio.post(
@@ -59,14 +59,14 @@ class HttpService {
         onSendProgress: onSendProgress,
         onReceiveProgress: onReceiveProgress,
       );
-      return Result.ok(resp.data as T);
+      return MyResult.ok(resp.data as T);
     } catch (e) {
-      return Result.err(e.toString());
+      return MyResult.err(e.toString());
     }
   }
 
   /// HEAD 请求。
-  Future<Result<T, String>> head<T>(
+  Future<MyResult<T, String>> head<T>(
     String url, {
     dynamic data,
     Map<String, dynamic>? params,
@@ -74,7 +74,7 @@ class HttpService {
     CancelToken? cancelToken,
   }) async {
     if (!_network.isOnline()) {
-      return Result.err(i18n('networkOffline', '网络未连接'));
+      return MyResult.err(i18n('networkOffline', '网络未连接'));
     }
     try {
       final resp = await _dio.head(
@@ -84,14 +84,14 @@ class HttpService {
         options: options,
         cancelToken: cancelToken,
       );
-      return Result.ok(resp.data as T);
+      return MyResult.ok(resp.data as T);
     } catch (e) {
-      return Result.err(e.toString());
+      return MyResult.err(e.toString());
     }
   }
 
   /// 下载文件到本地路径。
-  Future<Result<String, String>> download(
+  Future<MyResult<String, String>> download(
     String url,
     String savePath, {
     void Function(int, int)? onReceiveProgress,
@@ -99,7 +99,7 @@ class HttpService {
     CancelToken? cancelToken,
   }) async {
     if (!_network.isOnline()) {
-      return Result.err(i18n('networkOffline', '网络未连接'));
+      return MyResult.err(i18n('networkOffline', '网络未连接'));
     }
     try {
       final resp = await _dio.download(
@@ -110,9 +110,9 @@ class HttpService {
         cancelToken: cancelToken,
       );
       if (resp.statusCode == 200) {
-        return Result.ok(savePath);
+        return MyResult.ok(savePath);
       }
-      return Result.err(
+      return MyResult.err(
         i18n(
           'downloadFailed',
           '下载失败:@reason',
@@ -120,7 +120,7 @@ class HttpService {
         ),
       );
     } catch (e) {
-      return Result.err(e.toString());
+      return MyResult.err(e.toString());
     }
   }
 }

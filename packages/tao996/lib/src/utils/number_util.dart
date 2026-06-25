@@ -3,17 +3,17 @@ import 'dart:math';
 import 'package:tao996/tao996.dart';
 
 /// 数字处理工具。
-class NumberUtil {
-  const NumberUtil();
+class MyNumberUtil {
+  MyNumberUtil._();
 
   /// 将分（整数）转换为元（字符串）。
   /// `10001` → `"100.01"`。`fractionDigits=0` 则返回整数。
-  String fenToYuan(
+  static String fenToYuan(
     dynamic num, {
     int fractionDigits = 2,
     bool emptyText = true,
   }) {
-    final value = _toNum(num);
+    final value = toNum(num);
     if (value == 0) return emptyText ? '' : '0';
 
     final yuan = value / 100;
@@ -28,7 +28,7 @@ class NumberUtil {
 
   /// 将元（字符串）转换为分（int）。
   /// `"100.01"` → `10001`。
-  int yuanToFen(String? money) {
+  static int yuanToFen(String? money) {
     if (money == null || money.trim().isEmpty) return 0;
     final cleaned = money.replaceAll(RegExp(r'[^\d\.\-]'), '');
     final value = double.tryParse(cleaned);
@@ -37,20 +37,20 @@ class NumberUtil {
   }
 
   /// 安全解析 int。
-  int parseInt(String? value, {int defaultValue = 0}) {
+  static int parseInt(String? value, {int defaultValue = 0}) {
     if (value == null || value.trim().isEmpty) return defaultValue;
     return int.tryParse(value.trim()) ?? defaultValue;
   }
 
   /// 安全解析 double。
-  double parseDouble(String? value, {double defaultValue = 0.0}) {
+  static double parseDouble(String? value, {double defaultValue = 0.0}) {
     if (value == null || value.trim().isEmpty) return defaultValue;
     return double.tryParse(value.trim()) ?? defaultValue;
   }
 
   /// 格式化数字为千分位分隔字符串，如 `1234567` → `"1,234,567"`。
-  String formatNumber(dynamic value) {
-    final num = _toNum(value);
+  static String formatNumber(dynamic value) {
+    final num = toNum(value);
     if (num == 0) return '0';
 
     final parts = num.toString().split('.');
@@ -70,16 +70,16 @@ class NumberUtil {
   }
 
   /// 数字列表求和。
-  num sum(List<num> list) => list.fold<num>(0, (a, b) => a + b);
+  static num sum(List<num> list) => list.fold<num>(0, (a, b) => a + b);
 
-  num _toNum(dynamic v) {
+  static num toNum(dynamic v) {
     if (v == null) return 0;
     if (v is num) return v;
     if (v is String) return double.tryParse(v.trim()) ?? 0;
     return 0;
   }
 
-  int numCompare(dynamic a, dynamic b) {
+  static int numCompare(dynamic a, dynamic b) {
     if (a == null || b == null) {
       return -1;
     }
@@ -105,35 +105,35 @@ class NumberUtil {
   }
 
   // 从数组中随机选出一个
-  T getRandomElement<T>(List<T> list) {
+  static T getRandomElement<T>(List<T> list) {
     final random = Random();
     // nextInt 生成一个从 0 到 list.length - 1 的随机整数
     return list[random.nextInt(list.length)];
   }
 
   // 从 (min,max) 中随机选出一个
-  int getRandomInt(int min, int max) {
+  static int getRandomInt(int min, int max) {
     final random = Random();
     return random.nextInt(max - min) + min;
   }
 
   // 从 (0, num) 随机数
-  int nextInt(int num) {
+  static int nextInt(int num) {
     final random = Random();
     return random.nextInt(num);
   }
 
   // 随机布尔值
-  bool getRandomBool() {
+  static bool getRandomBool() {
     final random = Random();
     return random.nextBool();
   }
 
-  List<int> getInts(String value) {
+  static List<int> getInts(String value) {
     return value
         .split(',')
         .where((e) => e.trim().isNotEmpty)
-        .map((e) => tu.data.getInt(e))
+        .map((e) => MyDataUtil.getInt(e))
         .where((e) => e > 0)
         .toList();
   }
@@ -144,7 +144,7 @@ class NumberUtil {
   /// [length] 要挑选的个数，[minLength] 最少个数，[maxLength] 最多个数; [minLength] , [maxLength] 只有在 [length] == 0 时才有效
   ///
   /// [unique] 是否不重复（默认true）
-  List<int> randomPick(
+  static List<int> randomPick(
     List<int> items, {
     bool unique = true,
     int minLength = 0,

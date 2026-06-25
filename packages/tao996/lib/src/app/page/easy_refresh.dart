@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:tao996/tao996.dart';
 
 /// 简单的下拉刷新控制器。
-abstract class EasyRefreshController {
+abstract class MyEasyRefreshController {
   final ScrollController scrollController = ScrollController();
   final RxBool hasMore = RxBool(true);
 
@@ -19,12 +19,12 @@ abstract class EasyRefreshController {
 }
 
 /// 简易下拉刷新组件（基于 RefreshIndicator）。
-class EasyRefresh {
-  EasyRefresh._();
+class MyEasyRefresh {
+  MyEasyRefresh._();
 
   /// 可下拉刷新的列表。
   static Widget listView(
-    EasyRefreshController controller, {
+    MyEasyRefreshController controller, {
     required int itemCount,
     required Widget Function(BuildContext, int) itemBuilder,
     Widget Function(BuildContext, int)? separatorBuilder,

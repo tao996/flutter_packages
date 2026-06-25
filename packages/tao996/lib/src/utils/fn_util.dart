@@ -4,8 +4,8 @@ import 'dart:math';
 import 'package:flutter/foundation.dart';
 
 /// 函数工具 — debounce、throttle 等。
-class FnUtil {
-  const FnUtil();
+class MyFnUtil {
+  MyFnUtil._();
 
   /// 防抖 — 在 [milliseconds] 内连续调用只执行最后一次。
   /// 返回一个可调用的函数，调用它会重置计时器。
@@ -16,7 +16,10 @@ class FnUtil {
   /// search('ab'); // 重置
   /// search('abc'); // 300ms 后执行
   /// ```
-  DebounceFn debounce(void Function() callback, {int milliseconds = 300}) {
+  static DebounceFn debounce(
+    void Function() callback, {
+    int milliseconds = 300,
+  }) {
     Timer? timer;
     return DebounceFn(
       () {
@@ -32,7 +35,7 @@ class FnUtil {
 
   /// 节流 — 在 [milliseconds] 内最多执行一次。
   /// 首次调用立即执行，后续调用在冷却期内被忽略。
-  void Function() throttle(
+  static void Function() throttle(
     void Function() callback, {
     int milliseconds = 1000,
   }) {
@@ -53,7 +56,10 @@ class FnUtil {
   /// // ... 在 5 秒内如果想后悔：
   /// cancel();
   /// ```
-  void Function() startTimeout(Duration duration, void Function() onTimeout) {
+  static void Function() startTimeout(
+    Duration duration,
+    void Function() onTimeout,
+  ) {
     final timer = Timer(duration, onTimeout);
 
     // 返回一个闭包，用于外部手动取消
@@ -66,12 +72,15 @@ class FnUtil {
   }
 
   /// 空闲执行 — 在微任务队列中执行。
-  void idle(void Function() callback) {
+  static void idle(void Function() callback) {
     Future.microtask(callback);
   }
 
   /// 延迟执行。
-  Future<void> delay(int milliseconds, [void Function()? callback]) async {
+  static Future<void> delay(
+    int milliseconds, [
+    void Function()? callback,
+  ]) async {
     await Future.delayed(Duration(milliseconds: milliseconds));
     callback?.call();
   }
@@ -79,7 +88,7 @@ class FnUtil {
   /// 随机延时 [minMilliseconds] 毫秒 到 [maxMilliseconds] 毫秒的函数。
   ///
   /// 该函数会暂停当前执行，等待一个随机生成的持续时间。
-  Future<void> randomDelay({
+  static Future<void> randomDelay({
     int minMilliseconds = 500,
     int maxMilliseconds = 2000,
   }) async {
@@ -94,15 +103,12 @@ class FnUtil {
     await Future.delayed(Duration(milliseconds: delayMilliseconds));
   }
 
-  /// 恒等函数。
-  T identity<T>(T value) => value;
-
   /// 函数组合 — 从右到左。
   /// ```dart
   /// final f = fn.compose((int x) => x + 1, (int x) => x * 2);
   /// f(5); // 5 * 2 + 1 = 11
   /// ```
-  T Function(T) compose<T>(T Function(T) f, T Function(T) g) {
+  static T Function(T) compose<T>(T Function(T) f, T Function(T) g) {
     return (T x) => f(g(x));
   }
 }

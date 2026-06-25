@@ -29,7 +29,7 @@ class _SearchInputState extends State<SearchInput> {
   void initState() {
     super.initState();
     _controller = widget.controller ?? TextEditingController();
-    _debounce = tu.fn.debounce(
+    _debounce = MyFnUtil.debounce(
       () => widget.onSearch(_controller.text),
       milliseconds: widget.debounceMs,
     );

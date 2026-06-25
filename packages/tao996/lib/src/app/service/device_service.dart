@@ -3,10 +3,11 @@ import 'package:device_info_plus/device_info_plus.dart';
 import 'package:flutter/material.dart';
 
 /// 设备服务 — 设备信息、平台、屏幕尺寸。
-class DeviceService {
+class MyDeviceService {
   final DeviceInfoPlugin _plugin;
 
-  DeviceService({DeviceInfoPlugin? plugin}) : _plugin = plugin ?? DeviceInfoPlugin();
+  MyDeviceService({DeviceInfoPlugin? plugin})
+    : _plugin = plugin ?? DeviceInfoPlugin();
 
   /// 获取平台名称。
   String getPlatform() {

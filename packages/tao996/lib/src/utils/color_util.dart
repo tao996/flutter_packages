@@ -19,39 +19,39 @@ import 'package:flutter/material.dart';
 /// final success = ColorUtil.success(colorScheme);
 /// final error = ColorUtil.error(colorScheme);
 /// ```
-class ColorUtil {
-  const ColorUtil();
+class MyColorUtil {
+  MyColorUtil._();
   // 判断颜色是否完全透明（alpha = 0）。
-  bool isFullyTransparent(Color color) => color.a == 0;
+  static bool isFullyTransparent(Color color) => color.a == 0;
 
   /// 判断颜色是否有透明度（alpha < 255）。
-  bool isTransparent(Color color) => color.a < 255;
+  static bool isTransparent(Color color) => color.a < 255;
 
   /// 创建一个 8x8 的棋盘背景 Widget，常用于显示透明颜色。
-  Widget buildCheckerboard({double squareSize = 8}) {
+  static Widget buildCheckerboard({double squareSize = 8}) {
     return CustomPaint(painter: _CheckerboardPainter(squareSize: squareSize));
   }
 
   /// 代表成功的颜色，通常用于表示成功、完成、通过等操作。
-  Color success(ColorScheme colorScheme) => colorScheme.secondary;
+  static Color success(ColorScheme colorScheme) => colorScheme.secondary;
 
   /// 代表失败的颜色，通常用于表示失败、错误、拒绝等操作。
-  Color error(ColorScheme colorScheme) => colorScheme.error;
+  static Color error(ColorScheme colorScheme) => colorScheme.error;
 
   /// 危险颜色（error 的别名）。
-  Color danger(ColorScheme colorScheme) => colorScheme.error;
+  static Color danger(ColorScheme colorScheme) => colorScheme.error;
 
   /// 高亮或信息提示颜色。
-  Color info(ColorScheme colorScheme) => colorScheme.primary;
+  static Color info(ColorScheme colorScheme) => colorScheme.primary;
 
   /// 警告颜色。
-  Color warning(ColorScheme colorScheme) => colorScheme.tertiary;
+  static Color warning(ColorScheme colorScheme) => colorScheme.tertiary;
 
   /// 背景、表面式，常用于 AlertDialog
-  Color surface(ColorScheme colorScheme) => colorScheme.surface;
+  static Color surface(ColorScheme colorScheme) => colorScheme.surface;
 
   /// 文本颜色，带透明度。[opacity] 范围 0.0-1.0。
-  Color textColor(double opacity, ColorScheme colorScheme) =>
+  static Color textColor(double opacity, ColorScheme colorScheme) =>
       colorScheme.onSurface.withAlpha((255 * opacity).toInt());
 
   /// 将十六进制颜色字符串转换为 Color。
@@ -60,7 +60,7 @@ class ColorUtil {
   /// ```dart
   /// Color c1 = ColorUtil.hexToColor("#fef7ff", opacity: 0.5);
   /// ```
-  Color hexToColor(String hexCode, {double opacity = 1.0}) {
+  static Color hexToColor(String hexCode, {double opacity = 1.0}) {
     // 1. 去掉 # 号
     String cleanHex = hexCode.replaceAll('#', '');
 
@@ -77,7 +77,7 @@ class ColorUtil {
   /// ```dart
   /// Color c2 = ColorUtil.rgbToColor("255, 247, 255", opacity: 0.8);
   /// ```
-  Color rgbToColor(String rgbString, {double opacity = 1.0}) {
+  static Color rgbToColor(String rgbString, {double opacity = 1.0}) {
     try {
       // 1. 切割并转为整数列表
       List<int> parts = rgbString
@@ -106,7 +106,7 @@ class ColorUtil {
   /// final color1 = ColorUtil.parseToColor('#fef7ff');
   /// final color2 = ColorUtil.parseToColor('255, 247, 255');
   /// ```
-  Color parseToColor(String input, {double opacity = 1.0}) {
+  static Color parseToColor(String input, {double opacity = 1.0}) {
     try {
       if (input.contains('#')) {
         return hexToColor(input, opacity: opacity);

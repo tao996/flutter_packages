@@ -1,8 +1,10 @@
 import 'translation.dart';
 
-String get iInsert => i18n('insert', '添加');
-String get iUpdate => i18n('update', '更新');
-String get iDelete => i18n('delete', '删除');
+String get ttInsert => i18n('insert', '添加');
+String get ttUpdate => i18n('update', '更新');
+String get ttDelete => i18n('delete', '删除');
+String get ttCancel => i18n('cancel', '取消');
+String get ttValid => i18n('valid', '验证通过');
 
 extension I18nExt on String {
   // 优化后：'xxx'.mustRequired -> 'mustRequired'.trParams({'title': 'xxx'.tr})
@@ -20,6 +22,13 @@ extension I18nExt on String {
       i18n('mustArray', '@title必须是数组', params: {'title': this});
   String get mustObject =>
       i18n('mustObject', '@title必须是对象', params: {'title': this});
+  String get mustEmail =>
+      i18n('mustEmail', '@title必须是电子邮箱地址', params: {'title': this});
+  String get mustPhone =>
+      i18n('mustPhone', '@title必须是手机号码', params: {'title': this});
+  String get mustRegexPattern =>
+      i18n('mustRegexPattern', '@title必须是有效的正则表达式', params: {'title': this});
+
   String mustLessThen(dynamic value) => i18n(
     'mustLessThen',
     '@title必须小于@value',
@@ -40,6 +49,23 @@ extension I18nExt on String {
     '@title不能大于@value',
     params: {'title': this, 'value': value},
   );
+  String minLength(int value) => i18n(
+    'mustMinLength',
+    '@title长度不能小于@value',
+    params: {'title': this, 'value': value},
+  );
+  String maxLength(int value) => i18n(
+    'mustMaxLength',
+    '@title长度不能大于@value',
+    params: {'title': this, 'value': value},
+  );
+  String mustBetween(dynamic min, dynamic max) => i18n(
+    'mustBetween',
+    '@title必须在@min和@max之间',
+    params: {'title': this, 'min': min, 'max': max},
+  );
+  String get invalid =>
+      i18n('invalid', '验证失败:@reason', params: {'reason': this});
   String get mustSelected =>
       i18n('mustSelected', '必须选择一个@title', params: {'title': this});
   String get isRepeat => i18n('isRepeat', '重复的@title', params: {'title': this});

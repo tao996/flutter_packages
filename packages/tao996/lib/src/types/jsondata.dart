@@ -1,11 +1,11 @@
 import 'dart:convert';
 import 'package:tao996/tao996.dart';
 
-class Jsondata {
+class MyJsondata {
   late Map<String, dynamic> _map;
   bool _hasContent = false;
 
-  Jsondata({String? content}) {
+  MyJsondata({String? content}) {
     setContent(content);
   }
 
@@ -50,23 +50,23 @@ class Jsondata {
   }
 
   int getInt(String key) {
-    return tu.data.getInt(_map[key]);
+    return MyDataUtil.getInt(_map[key]);
   }
 
   String getString(String key) {
-    return tu.data.getString(_map[key]);
+    return MyDataUtil.getString(_map[key]);
   }
 
   bool getBool(String key) {
-    return tu.data.getBool(_map[key]);
+    return MyDataUtil.getBool(_map[key]);
   }
 
   double getDouble(String key) {
-    return tu.data.getDouble(_map[key]);
+    return MyDataUtil.getDouble(_map[key]);
   }
 
   DateTime? getDateTime(String key) {
-    return tu.data.getDateTime(_map[key]);
+    return MyDataUtil.getDateTime(_map[key]);
   }
 
   @override

@@ -1,8 +1,8 @@
-class ArrayUtil {
-  const ArrayUtil();
+class MyArrayUtil {
+  MyArrayUtil._();
 
   /// 求交集 (Intersection)
-  List<T> intersection<T>(List<T> a, List<T> b) {
+  static List<T> intersection<T>(List<T> a, List<T> b) {
     return a.toSet().intersection(b.toSet()).toList();
   }
 
@@ -15,7 +15,7 @@ class ArrayUtil {
   /// [deletion]: 删除元素列表, 在 [a] 中存在，但不在 [b] 中
   ///
   /// [update]: 更新元素列表, 在 [a] 中存在，[b] 中存在，取的是 [b] 中的新元素
-  void deepCompare<T>(
+  static void deepCompare<T>(
     List<T> a,
     List<T> b,
     bool Function(T a, T b) compare,
@@ -51,7 +51,7 @@ class ArrayUtil {
   }
 
   /// 深层交集
-  List<T> deepIntersection<T>(
+  static List<T> deepIntersection<T>(
     List<T> a,
     List<T> b,
     bool Function(T a, T b) compare,
@@ -76,12 +76,12 @@ class ArrayUtil {
   }
 
   /// 求并集 (Union)
-  List<T> union<T>(List<T> a, List<T> b) {
+  static List<T> union<T>(List<T> a, List<T> b) {
     return a.toSet().union(b.toSet()).toList();
   }
 
   /// 求差集 (Difference)
-  List<T> difference<T>(List<T> a, List<T> b) {
+  static List<T> difference<T>(List<T> a, List<T> b) {
     return a.toSet().difference(b.toSet()).toList();
   }
 
@@ -90,7 +90,7 @@ class ArrayUtil {
   /// [compare]: 比较函数，返回 true 表示两个元素相等
   ///
   /// 注意：结果列表会自动去重，避免重复元素
-  List<T> deepDifference<T>(
+  static List<T> deepDifference<T>(
     List<T> a,
     List<T> b,
     bool Function(T a, T b) compare,
@@ -121,8 +121,9 @@ class ArrayUtil {
     return result;
   }
 
-  List<T> unique<T>(Iterable<T> list) => list.toSet().toList();
+  static List<T> unique<T>(Iterable<T> list) => list.toSet().toList();
 
   /// 降维 (Flatten)
-  List<T> flatten<T>(List<List<T>> list) => list.expand((i) => i).toList();
+  static List<T> flatten<T>(List<List<T>> list) =>
+      list.expand((i) => i).toList();
 }

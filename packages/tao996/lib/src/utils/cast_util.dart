@@ -1,16 +1,16 @@
 /// 类型转换工具 — 安全地在常见类型之间做转换。
-class CastUtil {
-  const CastUtil();
+class MyCastUtil {
+  MyCastUtil._();
 
   /// 转为 String，非 String 类型返回 [defaultValue]。
-  String asString(dynamic value, {String defaultValue = ''}) {
+  static String asString(dynamic value, {String defaultValue = ''}) {
     if (value is String) return value;
     if (value != null) return value.toString();
     return defaultValue;
   }
 
   /// 转为 int。
-  int asInt(dynamic value, {int defaultValue = 0}) {
+  static int asInt(dynamic value, {int defaultValue = 0}) {
     if (value is int) return value;
     if (value is double) return value.toInt();
     if (value is String) return int.tryParse(value) ?? defaultValue;
@@ -19,7 +19,7 @@ class CastUtil {
   }
 
   /// 转为 double。
-  double asDouble(dynamic value, {double defaultValue = 0.0}) {
+  static double asDouble(dynamic value, {double defaultValue = 0.0}) {
     if (value is double) return value;
     if (value is int) return value.toDouble();
     if (value is String) return double.tryParse(value) ?? defaultValue;
@@ -27,7 +27,7 @@ class CastUtil {
   }
 
   /// 转为 bool。
-  bool asBool(dynamic value, {bool defaultValue = false}) {
+  static bool asBool(dynamic value, {bool defaultValue = false}) {
     if (value is bool) return value;
     if (value is int) return value != 0;
     if (value is String) {
@@ -39,7 +39,7 @@ class CastUtil {
   }
 
   /// 转为 `List<T>`，使用转换函数逐个处理元素。
-  List<T> asList<T>(dynamic value, T Function(dynamic) castItem) {
+  static List<T> asList<T>(dynamic value, T Function(dynamic) castItem) {
     if (value is! List) return [];
     return value.map((e) => castItem(e)).toList();
   }
@@ -49,7 +49,7 @@ class CastUtil {
   /// ```dart
   /// final nums = cast.asListStrict<int>([1, 'a', 2, null, 3]); // [1, 2, 3]
   /// ```
-  List<T> asListStrict<T>(dynamic value) {
+  static List<T> asListStrict<T>(dynamic value) {
     if (value is! List) return [];
     return value.whereType<T>().toList();
   }
@@ -59,7 +59,7 @@ class CastUtil {
   /// ```dart
   /// final flat = cast.asListFlat<int>([[1, 2], [3, 4]]); // [1, 2, 3, 4]
   /// ```
-  List<T> asListFlat<T>(dynamic value) {
+  static List<T> asListFlat<T>(dynamic value) {
     if (value is! List) return [];
     return value
         .expand((e) => e is List ? e.whereType<T>() : [e])
@@ -68,7 +68,7 @@ class CastUtil {
   }
 
   /// 转为 `Map<String, dynamic>`。
-  Map<String, dynamic> asMap(
+  static Map<String, dynamic> asMap(
     dynamic value, {
     Map<String, dynamic>? defaultValue,
   }) {
@@ -79,19 +79,19 @@ class CastUtil {
   }
 
   /// 安全的向下转型 — value is T 时返回 value，否则返回 `null`。
-  T? tryCast<T>(dynamic value) {
+  static T? tryCast<T>(dynamic value) {
     if (value is T) return value;
     return null;
   }
 
   /// 强制转型 — 不满足时返回 [defaultValue]。
-  T forceCast<T>(dynamic value, T defaultValue) {
+  static T forceCast<T>(dynamic value, T defaultValue) {
     if (value is T) return value;
     return defaultValue;
   }
 
   /// 尝试将 String 解析为 num，支持 int 和 double。
-  num? tryParseNum(String value) {
+  static num? tryParseNum(String value) {
     return int.tryParse(value) ?? double.tryParse(value);
   }
 }

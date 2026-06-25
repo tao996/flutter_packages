@@ -14,14 +14,14 @@
 ///   err: (e) => print(e),
 /// );
 /// ```
-sealed class Result<T, E> {
-  const Result();
+sealed class MyResult<T, E> {
+  const MyResult();
 
   /// 创建成功结果。
-  factory Result.ok(T value) => Ok(value);
+  factory MyResult.ok(T value) => Ok(value);
 
   /// 创建失败结果。
-  factory Result.err(E error) => Err(error);
+  factory MyResult.err(E error) => Err(error);
 
   /// 包装 try/catch — 将可能抛异常的代码转为 Result。
   ///
@@ -31,14 +31,14 @@ sealed class Result<T, E> {
   ///   (e) => '解析失败: $e',
   /// );
   /// ```
-  factory Result.tryCatch(
+  factory MyResult.tryCatch(
     T Function() block,
     E Function(Object error) onError,
   ) {
     try {
-      return Result.ok(block());
+      return MyResult.ok(block());
     } catch (e) {
-      return Result.err(onError(e));
+      return MyResult.err(onError(e));
     }
   }
 
@@ -67,30 +67,36 @@ sealed class Result<T, E> {
   });
 
   /// 成功时执行回调。
-  Result<T, E> onOk(void Function(T value) callback) {
+  MyResult<T, E> onOk(void Function(T value) callback) {
     if (this is Ok<T, E>) callback((this as Ok<T, E>).value);
     return this;
   }
 
   /// 失败时执行回调。
-  Result<T, E> onErr(void Function(E error) callback) {
+  MyResult<T, E> onErr(void Function(E error) callback) {
     if (this is Err<T, E>) callback((this as Err<T, E>).error);
     return this;
   }
 
   /// 映射成功值。
-  Result<R, E> map<R>(R Function(T value) transform) {
-    return match(ok: (v) => Result.ok(transform(v)), err: (e) => Result.err(e));
+  MyResult<R, E> map<R>(R Function(T value) transform) {
+    return match(
+      ok: (v) => MyResult.ok(transform(v)),
+      err: (e) => MyResult.err(e),
+    );
   }
 
   /// 映射错误值。
-  Result<T, R> mapErr<R>(R Function(E error) transform) {
-    return match(ok: (v) => Result.ok(v), err: (e) => Result.err(transform(e)));
+  MyResult<T, R> mapErr<R>(R Function(E error) transform) {
+    return match(
+      ok: (v) => MyResult.ok(v),
+      err: (e) => MyResult.err(transform(e)),
+    );
   }
 
   /// 链式调用 — 如果成功则执行 [next]，否则原样传递错误。
-  Result<R, E> then<R>(Result<R, E> Function(T value) next) {
-    return match(ok: (v) => next(v), err: (e) => Result.err(e));
+  MyResult<R, E> then<R>(MyResult<R, E> Function(T value) next) {
+    return match(ok: (v) => next(v), err: (e) => MyResult.err(e));
   }
 
   /// 获取成功值，失败时返回 [defaultValue]。
@@ -101,7 +107,7 @@ sealed class Result<T, E> {
 }
 
 /// 成功结果。
-class Ok<T, E> extends Result<T, E> {
+class Ok<T, E> extends MyResult<T, E> {
   @override
   final T value;
   const Ok(this.value);
@@ -115,7 +121,7 @@ class Ok<T, E> extends Result<T, E> {
 }
 
 /// 失败结果。
-class Err<T, E> extends Result<T, E> {
+class Err<T, E> extends MyResult<T, E> {
   @override
   final E error;
   const Err(this.error);

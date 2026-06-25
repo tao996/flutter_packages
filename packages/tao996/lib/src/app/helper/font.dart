@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:tao996/tao996.dart';
 
 /// 字体选择器。
-class FontHelper {
-  const FontHelper();
+class MyFontHelper {
+  MyFontHelper._();
 
   /// 显示字体选择对话框。
-  void showFontPickerDialog(
+  static void showFontPickerDialog(
     BuildContext context, {
     required List<String> fonts,
     void Function(String)? onChange,
@@ -70,7 +70,7 @@ class FontHelper {
             actions: [
               TextButton(
                 onPressed: () => Navigator.pop(ctx),
-                child: Text(i18n('cancel', '取消')),
+                child: Text(ttCancel),
               ),
             ],
           );
@@ -80,7 +80,7 @@ class FontHelper {
   }
 
   /// 构建字体选择列表项。
-  Widget buildTile(
+  static Widget buildTile(
     BuildContext context,
     String fontFamily, {
     void Function(String)? onChange,

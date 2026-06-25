@@ -2,14 +2,14 @@ import 'dart:async';
 import 'package:connectivity_plus/connectivity_plus.dart';
 
 /// 网络服务 — 网络状态监听、在线/离线检测。
-class NetworkService {
+class MyNetworkService {
   final Connectivity _connectivity;
   final _controller = StreamController<bool>.broadcast();
   bool _isOnline = true;
   StreamSubscription<List<ConnectivityResult>>? _subscription;
 
-  NetworkService({Connectivity? connectivity})
-      : _connectivity = connectivity ?? Connectivity() {
+  MyNetworkService({Connectivity? connectivity})
+    : _connectivity = connectivity ?? Connectivity() {
     _init();
   }
 

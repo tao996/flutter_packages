@@ -11,7 +11,7 @@ import '../reactive/rx.dart';
 /// bus.emit('hello world');
 /// sub.cancel();
 /// ```
-class EventBus {
+class MyEventBus {
   final _listeners = <_EventHandler>[];
 
   /// 监听指定类型的事件。

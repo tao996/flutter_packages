@@ -12,8 +12,8 @@ import 'package:tao996/tao996.dart';
 ///   onChanged: (value) => print(value),
 /// )
 /// ```
-class FormHelper {
-  const FormHelper();
+class MyFormHelper {
+  MyFormHelper._();
 
   /// 生成表单 key，用于表单验证。
   ///
@@ -24,7 +24,7 @@ class FormHelper {
   ///   // 验证通过
   /// }
   /// ```
-  GlobalKey<FormState> formKey() {
+  static GlobalKey<FormState> formKey() {
     return GlobalKey<FormState>();
   }
 
@@ -43,7 +43,7 @@ class FormHelper {
   ///   isRequired: true,
   /// )
   /// ```
-  Widget select<T>({
+  static Widget select<T>({
     required String label,
     required List<KV<T>> items,
     required ValueChanged<T> onChanged,

@@ -1,10 +1,10 @@
 import 'package:tao996/tao996.dart';
 
 /// 语言服务 — 语言切换、当前语言获取。
-class LocaleService {
+class MyLocaleService {
   final TranslationManager _tm;
 
-  LocaleService({required TranslationManager tm}) : _tm = tm;
+  MyLocaleService({required TranslationManager tm}) : _tm = tm;
 
   /// 获取当前语言代码。
   String getCurrentLocale() => _tm.currentLocale;

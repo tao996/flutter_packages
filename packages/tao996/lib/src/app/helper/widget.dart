@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:tao996/tao996.dart';
 
-class WidgetHelper {
-  const WidgetHelper();
+class MyWidgetHelper {
+  MyWidgetHelper._();
 
   /// 头像组件 - 支持本地图片、名称首字母、默认图标。
   ///
@@ -18,7 +18,7 @@ class WidgetHelper {
   /// // 显示默认图标
   /// MyAvatar(icon: Icons.person, radius: 24)
   /// ```
-  Widget avatar({
+  static Widget avatar({
     String? logoPath,
     String? name,
     bool useLogo = true,
@@ -34,7 +34,7 @@ class WidgetHelper {
     );
   }
 
-  Widget button({
+  static Widget button({
     Key? key,
     String? text,
     Widget? child,
@@ -75,7 +75,7 @@ class WidgetHelper {
     );
   }
 
-  Widget saveButton({
+  static Widget saveButton({
     Key? key,
     String? label,
     VoidCallback? onPressed,
@@ -89,7 +89,7 @@ class WidgetHelper {
     );
   }
 
-  Widget cancelButton({
+  static Widget cancelButton({
     Key? key,
     VoidCallback? onPressed,
     bool isBack = false,
@@ -97,7 +97,7 @@ class WidgetHelper {
     return MyCancelButton(key: key, isBack: isBack, onPressed: onPressed);
   }
 
-  Widget deleteButton({
+  static Widget deleteButton({
     Key? key,
     VoidCallback? onPressed,
     bool confirm = true,
@@ -105,7 +105,7 @@ class WidgetHelper {
     return MyDeleteButton(key: key, onPressed: onPressed, confirm: confirm);
   }
 
-  Widget deleteIconButton({
+  static Widget deleteIconButton({
     Key? key,
     VoidCallback? onPressed,
     String? tooltip,
@@ -113,11 +113,15 @@ class WidgetHelper {
     return MyDeleteIconButton(key: key, onPressed: onPressed, tooltip: tooltip);
   }
 
-  Widget insertButton({Key? key, String? label, VoidCallback? onPressed}) {
+  static Widget insertButton({
+    Key? key,
+    String? label,
+    VoidCallback? onPressed,
+  }) {
     return MyInsertButton(key: key, label: label, onPressed: onPressed);
   }
 
-  Widget insertIconButton({
+  static Widget insertIconButton({
     Key? key,
     VoidCallback? onPressed,
     String? tooltip,
@@ -125,26 +129,33 @@ class WidgetHelper {
     return MyAddIconButton(key: key, onPressed: onPressed, tooltip: tooltip);
   }
 
-  Widget editButton({Key? key, String? label, VoidCallback? onPressed}) {
+  static Widget editButton({Key? key, String? label, VoidCallback? onPressed}) {
     return MyEditButton(key: key, label: label, onPressed: onPressed);
   }
 
-  Widget editIconButton({Key? key, VoidCallback? onPressed, String? tooltip}) {
+  static Widget editIconButton({
+    Key? key,
+    VoidCallback? onPressed,
+    String? tooltip,
+  }) {
     return MyEditIconButton(key: key, onPressed: onPressed, tooltip: tooltip);
   }
 
-  Widget menuButtons({Key? key, required List<List<MyMenuButtonItem>> items}) {
+  static Widget menuButtons({
+    Key? key,
+    required List<List<MyMenuButtonItem>> items,
+  }) {
     return MyMenuButtons(key: key, items: items);
   }
 
-  Widget qrcodeIconButton({
+  static Widget qrcodeIconButton({
     Key? key,
     required void Function(String?) onChange,
   }) {
     return MyQrcodeIconButton(key: key, onChange: onChange);
   }
 
-  Widget customTabBar({
+  static Widget customTabBar({
     Key? key,
     required RxInt activeIndex,
     required void Function(int index) onChange,
@@ -168,7 +179,7 @@ class WidgetHelper {
     );
   }
 
-  Widget empty({
+  static Widget empty({
     Key? key,
     EmptyType type = EmptyType.noData,
     String? message,
@@ -186,7 +197,7 @@ class WidgetHelper {
     );
   }
 
-  Widget emptyNoData({
+  static Widget emptyNoData({
     Key? key,
     String? message,
     Widget? icon,
@@ -202,7 +213,7 @@ class WidgetHelper {
     );
   }
 
-  Widget emptyNoNetwork({
+  static Widget emptyNoNetwork({
     Key? key,
     String? message,
     Widget? icon,
@@ -218,7 +229,7 @@ class WidgetHelper {
     );
   }
 
-  Widget emptyNoPermission({
+  static Widget emptyNoPermission({
     Key? key,
     String? message,
     Widget? icon,
@@ -235,7 +246,7 @@ class WidgetHelper {
   }
 
   /// 空状态布局，会占据整个空余的屏幕（自动根据宽度高度适配）
-  Widget emptyView({
+  static Widget emptyView({
     Key? key,
     required String titleText,
     String? descText,
@@ -254,7 +265,7 @@ class WidgetHelper {
   /// 网络复选按钮组
   /// [crossAxisCount] 列数，默认为 3
   /// [horizontal] 水平内边距
-  Widget gridCheckbox({
+  static Widget gridCheckbox({
     Key? key,
     required List<String> items,
     required ValueChanged<List<String>> onSelectionChanged,
@@ -272,7 +283,7 @@ class WidgetHelper {
     );
   }
 
-  Widget animatedIcon({
+  static Widget animatedIcon({
     Key? key,
     IconData icon = Icons.refresh,
     bool isLoading = false,
@@ -307,7 +318,7 @@ class WidgetHelper {
   /// // 短文本
   /// MyIconSvg('AB', size: 24)
   /// ```
-  Widget iconSvg({
+  static Widget iconSvg({
     Key? key,
     required dynamic data,
     Color? color,
@@ -327,7 +338,7 @@ class WidgetHelper {
 
   /// 具有缓存功能的图片组件，支持网络图片、本地图片、资源图片。
   /// [enabledTap] 是否启用点击事件，如果[onTap] 为空，则是打开图片
-  Widget image({
+  static Widget image({
     Key? key,
     required dynamic data,
     VoidCallback? onTap,
@@ -346,7 +357,7 @@ class WidgetHelper {
   /// 网络图片（带缓存、占位符、错误处理）。
   ///
   /// 使用 Flutter 内置 Image.network，在测试环境可无缝替换。
-  Widget networkImage({
+  static Widget networkImage({
     Key? key,
     String? url,
     double? width,
@@ -368,7 +379,7 @@ class WidgetHelper {
     );
   }
 
-  Widget input({
+  static Widget input({
     Key? key,
     required TextEditingController controller,
     required String labelText,
@@ -402,7 +413,7 @@ class WidgetHelper {
     );
   }
 
-  Widget inputLabel({
+  static Widget inputLabel({
     Key? key,
     required String label,
     bool isRequired = false,
@@ -410,7 +421,7 @@ class WidgetHelper {
     return MyInputLabel(key: key, label: label, isRequired: isRequired);
   }
 
-  Widget textarea({
+  static Widget textarea({
     Key? key,
     required TextEditingController controller,
     required String labelText,
@@ -431,7 +442,7 @@ class WidgetHelper {
   /// 日期选择输入框。
   ///
   /// [labelText] 标签文本，默认为 '选择日期'
-  Widget dateInput({
+  static Widget dateInput({
     Key? key,
     required DateTime? initialDate,
     required Function(DateTime?) onDateSelected,
@@ -450,7 +461,7 @@ class WidgetHelper {
   /// 时间选择输入框。
   ///
   /// [labelText] 标签文本，默认为 '选择时间'
-  Widget timeInput({
+  static Widget timeInput({
     Key? key,
     required DateTime? initTime,
     required Function(DateTime?) onTimeSelected,
@@ -467,7 +478,7 @@ class WidgetHelper {
   }
 
   /// 卡片工具 — 带圆角和阴影的 Card 封装。
-  Widget card(Widget child, {bool fullWidth = true}) {
+  static Widget card(Widget child, {bool fullWidth = true}) {
     return Card(
       elevation: 2,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
@@ -480,7 +491,7 @@ class WidgetHelper {
     );
   }
 
-  Widget miniColumn(
+  static Widget miniColumn(
     List<Widget> children, {
     MainAxisAlignment mainAxisAlignment = MainAxisAlignment.start,
     CrossAxisAlignment crossAxisAlignment = CrossAxisAlignment.start,
@@ -494,7 +505,7 @@ class WidgetHelper {
     );
   }
 
-  Widget miniRow(
+  static Widget miniRow(
     List<Widget> children, {
     MainAxisAlignment mainAxisAlignment = MainAxisAlignment.start,
     CrossAxisAlignment crossAxisAlignment = CrossAxisAlignment.center,
@@ -523,7 +534,7 @@ class WidgetHelper {
   ///   },
   /// )
   /// ```
-  Widget listCheckbox<T>({
+  static Widget listCheckbox<T>({
     Key? key,
     required List<KV<T>> items,
     List<T>? values,
@@ -539,17 +550,17 @@ class WidgetHelper {
     );
   }
 
-  Widget loading() {
+  static Widget loading() {
     return const MyLoading();
   }
 
   /// 放在 AppBar bottom 中的加载进度条。
-  PreferredSizeWidget? appBarLoading(RxBool isLoading) {
+  static PreferredSizeWidget? appBarLoading(RxBool isLoading) {
     return myAppBarLoading(isLoading);
   }
 
   /// 二维码生成视图
-  Widget qrcode({
+  static Widget qrcode({
     Key? key,
     required String data,
     double size = 200,
@@ -570,7 +581,7 @@ class WidgetHelper {
   }
 
   /// 拖拽排序列表。
-  Widget reorder<T>({
+  static Widget reorder<T>({
     Key? key,
     required RxList<T> items,
     required Widget Function(BuildContext context, int index) itemBuilder,
@@ -588,7 +599,7 @@ class WidgetHelper {
   /// 集成 SafeArea 的页面骨架。
   /// [unfocusOnTap] 默认为 true，点击空白处时，会 unfocus 掉当前页面的焦点;
   /// [singleChildScrollView] 默认为 false
-  Widget scaffold({
+  static Widget scaffold({
     Key? key,
     required Widget body,
     AppBar? appBar,
@@ -624,7 +635,7 @@ class WidgetHelper {
     );
   }
 
-  Widget padding({
+  static Widget padding({
     Key? key,
     required Widget child,
     double? horizontal,
@@ -646,7 +657,7 @@ class WidgetHelper {
     );
   }
 
-  Widget searchInput({
+  static Widget searchInput({
     Key? key,
     required Function(String) onSearch,
     int debounceMs = 300,
@@ -662,7 +673,7 @@ class WidgetHelper {
     );
   }
 
-  Widget separatorLine({Key? key}) {
+  static Widget separatorLine({Key? key}) {
     return MySeparatorLine(key: key);
   }
 
@@ -681,7 +692,7 @@ class WidgetHelper {
   ///   ],
   /// )
   /// ```
-  Widget table({
+  static Widget table({
     Key? key,
     required List<MyHeaderColumn> headers,
     required List<List<Widget>> rows,
@@ -708,43 +719,43 @@ class WidgetHelper {
     );
   }
 
-  Widget h1(String title, {Color? color}) {
+  static Widget h1(String title, {Color? color}) {
     return MyText.h1(title, color: color);
   }
 
-  Widget h2(String title, {Color? color}) {
+  static Widget h2(String title, {Color? color}) {
     return MyText.h2(title, color: color);
   }
 
-  Widget h3(String title, {Color? color}) {
+  static Widget h3(String title, {Color? color}) {
     return MyText.h3(title, color: color);
   }
 
-  Widget h4(String title, {Color? color}) {
+  static Widget h4(String title, {Color? color}) {
     return MyText.h4(title, color: color);
   }
 
-  Widget h5(String title, {Color? color}) {
+  static Widget h5(String title, {Color? color}) {
     return MyText.h5(title, color: color);
   }
 
-  Widget h6(String title, {Color? color}) {
+  static Widget h6(String title, {Color? color}) {
     return MyText.h6(title, color: color);
   }
 
-  Widget placeholder(String title, {Color? color}) {
+  static Widget placeholder(String title, {Color? color}) {
     return MyText.placeholder(title, color: color);
   }
 
-  Widget bold(String title) {
+  static Widget bold(String title) {
     return MyText.bold(title);
   }
 
-  Widget inkTitle(String title, VoidCallback onTap) {
+  static Widget inkTitle(String title, VoidCallback onTap) {
     return MyText.inkTitle(title, onTap);
   }
 
-  Widget sectionTitle(
+  static Widget sectionTitle(
     String title, {
     IconData? iconData,
     String? subTitle,
@@ -758,14 +769,14 @@ class WidgetHelper {
     );
   }
 
-  Widget listview(
-    EasyRefreshController controller, {
+  static Widget listview(
+    MyEasyRefreshController controller, {
     required int itemCount,
     required Widget Function(BuildContext, int) itemBuilder,
     Widget Function(BuildContext, int)? separatorBuilder,
     EdgeInsetsGeometry? padding,
   }) {
-    return EasyRefresh.listView(
+    return MyEasyRefresh.listView(
       controller,
       itemCount: itemCount,
       itemBuilder: itemBuilder,
@@ -774,7 +785,7 @@ class WidgetHelper {
     );
   }
 
-  Widget smartRefresherListView<T>(
+  static Widget smartRefresherListView<T>(
     SmartRefresherController<T> controller, {
     required int itemCount,
     required Widget Function(BuildContext, int) itemBuilder,

@@ -19,24 +19,17 @@ extension ResourceLocationExtension on ResourceLocation {
   bool get isUnknown => this == ResourceLocation.unknown;
 }
 
-class FilepathUtil {
-  const FilepathUtil();
+class MyFilepathUtil {
+  MyFilepathUtil._();
 
-  String basename(String path) => p.basename(path);
+  static String basename(String path) => p.basename(path);
 
-  String dirname(String path) => p.dirname(path);
+  static String dirname(String path) => p.dirname(path);
 
-  String extension(String path) => p.extension(path);
-
-  String homeDir() {
-    if (Platform.isWindows) {
-      return Platform.environment['USERPROFILE'] ?? 'C:\\';
-    }
-    return Platform.environment['HOME'] ?? '/tmp';
-  }
+  static String extension(String path) => p.extension(path);
 
   /// 标准化用户输入的文件或目录路径，并统一使用 '/' 作为分隔符。
-  String normalize(String userPath) {
+  static String normalize(String userPath) {
     // 如果输入为空，直接返回空字符串
     if (userPath.isEmpty) {
       return '';
@@ -54,7 +47,7 @@ class FilepathUtil {
     return normalizedPath;
   }
 
-  bool isWindowsPath(String path) {
+  static bool isWindowsPath(String path) {
     if (path.isEmpty) {
       return false;
     }
@@ -73,11 +66,11 @@ class FilepathUtil {
   }
 
   /// 分割符，On Mac and Linux, this is /. On Windows, it's \.
-  String separator() {
+  static String separator() {
     return p.posix.separator;
   }
 
-  String dirSeparator() {
+  static String dirSeparator() {
     return Platform.isWindows ? '\\' : '/';
   }
 
@@ -97,17 +90,17 @@ class FilepathUtil {
   /// p.split('https://dart.dev/path/to/foo');
   ///   // -> 'https://dart.dev', 'path', 'to', 'foo'
   /// ```
-  List<String> split(String path) {
+  static List<String> split(String path) {
     return p.split(path);
   }
 
   /// 使用 path.posix.joinAll 来拼接路径，确保使用 '/' 分隔符;
   /// 注意，如果 [parts] 内部成员包含了 \\ ，并不会自动替换为 /
-  String posixJoinAll(Iterable<String> parts) {
+  static String posixJoinAll(Iterable<String> parts) {
     return p.posix.joinAll(parts);
   }
 
-  String joinAll(Iterable<String> parts) {
+  static String joinAll(Iterable<String> parts) {
     return p.joinAll(parts);
   }
 
@@ -124,7 +117,7 @@ class FilepathUtil {
   /// 某部分是绝对路径，则忽略其他所有部件
   /// context.join('path', '/to', 'foo'); // -> '/to/foo'
   /// ```
-  String posixJoin(
+  static String posixJoin(
     String part1, [
     String? part2,
     String? part3,
@@ -171,7 +164,7 @@ class FilepathUtil {
   /// 如果某个部件是绝对路径，则忽略其他所有部件
   /// p.join('path', '/to', 'foo'); // -> '/to/foo'
   /// ```
-  String join(
+  static String join(
     String part1, [
     String? part2,
     String? part3,
@@ -212,7 +205,7 @@ class FilepathUtil {
   }
 
   /// 获取路径类型，可以使用 FileSystemEntityType.file 来进行比较
-  FileSystemEntityType getFileType(String path) {
+  static FileSystemEntityType getFileType(String path) {
     return FileSystemEntity.typeSync(path);
   }
 
@@ -229,7 +222,7 @@ class FilepathUtil {
   /// // URL
   /// p.relative('https://dart.dev', from: 'https://pub.dev');  // -> 'https://dart.dev'
   /// ```
-  String relative(String path, {required String from}) {
+  static String relative(String path, {required String from}) {
     return p.relative(path, from: from);
   }
 
@@ -243,7 +236,7 @@ class FilepathUtil {
   /// p.dirname('foo');              // -> '.'
   /// p.dirname('');                 // -> '.'
   /// ```
-  String getDirname(String filePath) {
+  static String getDirname(String filePath) {
     File file = File(filePath);
     return p.dirname(file.path);
   }
@@ -254,7 +247,7 @@ class FilepathUtil {
   /// p.basename('path/to');          // -> 'to'
   /// p.basename('path/to/'); // -> 'to'
   /// ```
-  String getBasename(String filePath) {
+  static String getBasename(String filePath) {
     File file = File(filePath);
     return p.basename(file.path);
   }
@@ -264,7 +257,7 @@ class FilepathUtil {
   /// p.basenameWithoutExtension('path/to/foo.dart'); // -> 'foo'
   /// p.basenameWithoutExtension('path/to/foo.dart/'); // -> 'foo'
   /// ```
-  String getBasenameWithoutExtension(String filePath) {
+  static String getBasenameWithoutExtension(String filePath) {
     File file = File(filePath);
     return p.basenameWithoutExtension(file.path);
   }
@@ -280,7 +273,7 @@ class FilepathUtil {
   /// p.extension('foo.bar.dart.js', 10);  // -> '.bar.dart.js'
   /// p.extension('path/to/foo.bar.dart.js', 2);  // -> '.dart.js
   /// ```
-  String getExtension(String filePath) {
+  static String getExtension(String filePath) {
     File file = File(filePath);
     return p.extension(file.path);
   }
@@ -289,17 +282,17 @@ class FilepathUtil {
   /// ```
   /// p.withoutExtension('path/to/foo.dart'); // -> 'path/to/foo
   /// ```
-  String getWithoutExtension(String filePath) {
+  static String getWithoutExtension(String filePath) {
     File file = File(filePath);
     return p.withoutExtension(file.path);
   }
 
   /// 是否为一个绝对地址(本地的，或者网络的)
-  bool isAbsolute(String path) {
+  static bool isAbsolute(String path) {
     return p.isAbsolute(path);
   }
 
-  String absolute(
+  static String absolute(
     String part1, [
     String? part2,
     String? part3,
@@ -339,7 +332,7 @@ class FilepathUtil {
   /// 如果 [dir] 是一个目录，则将 [dir] 与 [filepath] 组合为文件路径返回；
   /// 如果 [dir] 不是一个目录，抛出异常；
   /// 注意：会对结果进行 normalize 处理
-  String resolvePath(String filepath, {String? dir}) {
+  static String resolvePath(String filepath, {String? dir}) {
     if (filepath.isEmpty) {
       if (dir != null && dir.isNotEmpty) {
         return resolvePath(dir);
@@ -376,22 +369,22 @@ class FilepathUtil {
   /// // 相对路径会被直接返回
   /// p.fromUri('path/to/foo'); // -> 'path/to/foo'
   /// ```
-  String fromUri(Object? uri) {
+  static String fromUri(Object? uri) {
     return p.fromUri(uri);
   }
 
   /// 获取当前脚本目录（应用所在目录）
-  String scriptDir() {
+  static String scriptDir() {
     return p.dirname(Platform.script.toFilePath());
   }
 
   /// 获取字符串的文件名列表
-  List<String> getFileNames(List<File> files) {
+  static List<String> getFileNames(List<File> files) {
     return files.map((file) => file.path.split(dirSeparator()).last).toList();
   }
 
   /// 根据文件路径推断 MIME 类型
-  String? getMimeTypeFromPath(String filePath) {
+  static String? getMimeTypeFromPath(String filePath) {
     // 1. 获取文件扩展名 (例如 'jpg')
     final extension = p.extension(filePath);
 
@@ -407,7 +400,7 @@ class FilepathUtil {
   }
 
   /// 判断给定的地址是网络地址还是本地文件路径。
-  ResourceLocation determineLocation(String address) {
+  static ResourceLocation determineLocation(String address) {
     try {
       if (address.startsWith('assets/')) {
         return ResourceLocation.assets;
@@ -455,12 +448,12 @@ class FilepathUtil {
   }
 
   /// 检查文件或者目录是否存在
-  bool exists(String path) {
+  static bool exists(String path) {
     return FileSystemEntity.typeSync(path) != FileSystemEntityType.notFound;
   }
 
   /// 递归创建目录
-  Directory createDir(String path) {
+  static Directory createDir(String path) {
     final d = Directory(path);
     if (!d.existsSync()) {
       d.createSync(recursive: true);

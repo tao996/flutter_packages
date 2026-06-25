@@ -2,7 +2,7 @@ import 'dart:math';
 
 import 'package:flutter/foundation.dart';
 
-class MyConsole {
+class MyConsoleUtil {
   static const String reset = '\x1B[0m'; // 重置/默认
   static const String black = '\x1B[30m';
   static const String red = '\x1B[31m'; // 红色
@@ -29,25 +29,25 @@ class MyConsole {
   static const String italic = '\x1B[3m'; // 斜体
   static const String underline = '\x1B[4m'; // 下划线
 
-  const MyConsole();
+  MyConsoleUtil._();
 
   static List<String> colors = [red, green, yellow, blue, magenta, cyan];
 
-  String random() {
+  static String random() {
     return colors[Random().nextInt(6)];
   }
 
-  String success(String content) {
-    return '${MyConsole.green}$content${MyConsole.reset}';
+  static String success(String content) {
+    return '${MyConsoleUtil.green}$content${MyConsoleUtil.reset}';
   }
 
-  String error(String content) {
-    return '${MyConsole.red}$content${MyConsole.reset}';
+  static String error(String content) {
+    return '${MyConsoleUtil.red}$content${MyConsoleUtil.reset}';
   }
 
   /// 封装成一个函数方便使用
   /// [data] 待打印的数据; [color] 颜色，不提供则为随机色
-  void print(
+  static void print(
     Object? data, {
     String? color,
     String? bgColor,
@@ -61,8 +61,8 @@ class MyConsole {
       prefix += bgColor;
     }
     if (bold) {
-      prefix += MyConsole.bold;
+      prefix += MyConsoleUtil.bold;
     }
-    debugPrint('$prefix${data.toString()}${MyConsole.reset}');
+    debugPrint('$prefix${data.toString()}${MyConsoleUtil.reset}');
   }
 }

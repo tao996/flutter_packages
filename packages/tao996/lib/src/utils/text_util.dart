@@ -8,34 +8,34 @@ const myRandomChars = 'abcdefghijklmnopqrstuvwxyz0123456789';
 final RegExp halfWidthChars = RegExp("[a-zA-Z0-9\\s.,!?:;\"'\\-]");
 
 /// 文本处理工具。
-class TextUtil {
-  const TextUtil();
+class MyTextUtil {
+  MyTextUtil._();
 
   /// Base64 编码。
-  String base64Encode(String input) => base64.encode(utf8.encode(input));
+  static String base64Encode(String input) => base64.encode(utf8.encode(input));
 
   /// Base64 解码。
-  String base64Decode(String input) => utf8.decode(base64.decode(input));
+  static String base64Decode(String input) => utf8.decode(base64.decode(input));
 
   /// 截断字符串到指定长度，超出加 `suffix`（默认 `...`）。
-  String truncate(String text, int maxLength, {String suffix = '...'}) {
+  static String truncate(String text, int maxLength, {String suffix = '...'}) {
     if (text.length <= maxLength) return text;
     return '${text.substring(0, maxLength)}$suffix';
   }
 
   /// 首字母大写。
-  String capitalize(String text) {
+  static String capitalize(String text) {
     if (text.isEmpty) return text;
     return text[0].toUpperCase() + text.substring(1);
   }
 
   /// 每个单词首字母大写。
-  String capitalizeAll(String text) {
+  static String capitalizeAll(String text) {
     return text.split(' ').map(capitalize).join(' ');
   }
 
   /// 转为小写驼峰（camelCase）。
-  String toCamelCase(String text) {
+  static String toCamelCase(String text) {
     final words = text.split(RegExp(r'[_\-\s]+'));
     if (words.isEmpty) return '';
     final first = words.first.toLowerCase();
@@ -44,7 +44,7 @@ class TextUtil {
   }
 
   /// 转为蛇形命名（snake_case）。
-  String toSnakeCase(String text) {
+  static String toSnakeCase(String text) {
     return text
         .replaceAllMapped(
           RegExp(r'[A-Z]'),
@@ -57,38 +57,40 @@ class TextUtil {
   }
 
   /// 转为连字符命名（kebab-case）。
-  String toKebabCase(String text) => toSnakeCase(text).replaceAll('_', '-');
+  static String toKebabCase(String text) =>
+      toSnakeCase(text).replaceAll('_', '-');
 
   /// 反转字符串。
-  String reverse(String text) =>
+  static String reverse(String text) =>
       String.fromCharCodes(text.runes.toList().reversed);
 
   /// 是否为空或空白。
-  bool isBlank(String? text) => text == null || text.trim().isEmpty;
+  static bool isBlank(String? text) => text == null || text.trim().isEmpty;
 
   /// 是否不为空。
-  bool isNotBlank(String? text) => !isBlank(text);
+  static bool isNotBlank(String? text) => !isBlank(text);
 
   /// 移除所有空白字符。
-  String removeWhitespace(String text) => text.replaceAll(RegExp(r'\s+'), '');
+  static String removeWhitespace(String text) =>
+      text.replaceAll(RegExp(r'\s+'), '');
 
   /// 取前 [count] 个字符。
-  String first(String text, int count) =>
+  static String first(String text, int count) =>
       text.length <= count ? text : text.substring(0, count);
 
   /// 取后 [count] 个字符。
-  String last(String text, int count) =>
+  static String last(String text, int count) =>
       text.length <= count ? text : text.substring(text.length - count);
 
   /// 重复字符串 [count] 次。
-  String repeat(String text, int count) => text * count;
+  static String repeat(String text, int count) => text * count;
 
   /// 补零到指定位数。
-  String padZero(int value, int length) =>
+  static String padZero(int value, int length) =>
       value.toString().padLeft(length, '0');
 
   /// 生成随机字符串。
-  String random(int length, {String chars = myRandomChars}) {
+  static String random(int length, {String chars = myRandomChars}) {
     final random = math.Random();
     return List.generate(
       length,
@@ -96,7 +98,7 @@ class TextUtil {
     ).join();
   }
 
-  String merge(
+  static String merge(
     String separator,
     String text0, [
     String? text1,
@@ -136,7 +138,7 @@ class TextUtil {
   }
 
   /// 获取字符串长度（两个半角宽字符算一个长度）
-  int textLength(String text) {
+  static int textLength(String text) {
     // 1. 获取所有半角字符 (英文字母、数字、空格和标点)
     final Iterable<Match> matches = halfWidthChars.allMatches(text);
     final int halfCharCount = matches.length;
@@ -154,7 +156,7 @@ class TextUtil {
   }
 
   /// 获取最大宽度
-  int maxLength(List<String> texts) {
+  static int maxLength(List<String> texts) {
     int l = 0;
     for (String text in texts) {
       l = math.max(l, textLength(text));
@@ -163,14 +165,14 @@ class TextUtil {
   }
 
   /// 去除右边的 trim
-  String trimRight(String text, String trim) {
+  static String trimRight(String text, String trim) {
     if (text.endsWith(trim)) {
       return text.substring(0, text.length - trim.length);
     }
     return text;
   }
 
-  String trimLeft(String text, String trim) {
+  static String trimLeft(String text, String trim) {
     if (text.startsWith(trim)) {
       return text.substring(trim.length);
     }
@@ -179,7 +181,7 @@ class TextUtil {
 
   /// 编写通用适配解码器
   /// 优先检查 BOM (字节顺序标记)，其次尝试 UTF-8，最后回退到 GBK。
-  String decode(List<int> bytes) {
+  static String decode(List<int> bytes) {
     if (bytes.isEmpty) return "";
 
     // 1. 处理 UTF-16 (Windows 常见的 Little Endian)
