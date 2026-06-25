@@ -1,12 +1,14 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:tao996/tao996.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 final myGlobal = MyGlobal();
 
 class MyGlobal {
   final Di _di = Di();
   ColorScheme? _colorScheme;
+  SharedPreferences? _prefs;
 
   ColorScheme get colorScheme => _colorScheme!;
   Di get di => _di;
@@ -16,7 +18,10 @@ class MyGlobal {
   HttpService get httpSer => _di.get<HttpService>();
   LocaleService get localeSer => _di.get<LocaleService>();
   MessageService get messageSer => _di.get<MessageService>();
+
+  /// 翻译管理
   TranslationManager get tm => TranslationManager.instance;
+  SharedPreferences get prefs => _prefs!;
 
   MyGlobal() {
     _di.registerLazySingleton<DeviceService>(() {
@@ -37,6 +42,10 @@ class MyGlobal {
     _di.registerLazySingleton<MessageService>(() {
       return MessageService();
     });
+  }
+
+  Future<void> initWith() async {
+    _prefs = await SharedPreferences.getInstance();
   }
 
   void setColorScheme(ColorScheme colorScheme) {

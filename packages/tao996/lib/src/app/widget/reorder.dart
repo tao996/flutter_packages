@@ -28,7 +28,7 @@ class MyReorder<T> extends StatelessWidget {
           shrinkWrap: true,
           physics: const NeverScrollableScrollPhysics(),
           itemCount: itemList.length,
-          onReorder: onReorder ?? _onReorder,
+          onReorderItem: onReorder ?? _onReorder,
           buildDefaultDragHandles: false,
           proxyDecorator: (child, index, animation) => Material(
             elevation: 6,

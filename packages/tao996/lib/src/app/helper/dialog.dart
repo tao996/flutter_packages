@@ -26,7 +26,7 @@ class DialogHelper {
                 titleWidget ??
                 Text(title, style: Theme.of(context).textTheme.titleLarge),
           ),
-          if (actions != null) ...actions,
+          ...?actions,
           if (!replace)
             IconButton(
               icon: const Icon(Icons.clear),
