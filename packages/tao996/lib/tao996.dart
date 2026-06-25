@@ -58,6 +58,9 @@ export 'src/defapp/routes.dart';
 // not app
 
 // db
+export 'src/db/database.dart';
+export 'src/db/json_converter.dart';
+export 'src/db/db_type_converter.dart';
 export 'src/db/model.dart';
 export 'src/db/query_builder.dart';
 export 'src/db/repository.dart';
@@ -94,7 +97,6 @@ export 'src/utils/data_util.dart';
 export 'src/utils/datetime_util.dart';
 export 'src/utils/filepath_util.dart';
 export 'src/utils/fn_util.dart';
-export 'src/utils/json_util.dart';
 export 'src/utils/number_util.dart';
 export 'src/utils/stack_util.dart';
 export 'src/utils/text_util.dart';

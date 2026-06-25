@@ -10,7 +10,7 @@
 /// final sql = qb.build();       // "WHERE name LIKE ? ORDER BY createdAt DESC LIMIT 10 OFFSET 0"
 /// final args = qb.whereArgs;   // ['%张三%']
 /// ```
-class QueryBuilder {
+class MyQueryBuilder {
   final List<String> _conditions = [];
   final List<Object?> _args = [];
   String? _orderBy;
@@ -19,7 +19,7 @@ class QueryBuilder {
 
   /// 添加 WHERE 条件。
   /// [condition] 如 `"name LIKE ?"`，[arg] 是对应的参数值。
-  QueryBuilder where(String condition, [Object? arg]) {
+  MyQueryBuilder where(String condition, [Object? arg]) {
     _conditions.add(condition);
     if (arg != null) {
       if (arg is List) {
@@ -32,7 +32,7 @@ class QueryBuilder {
   }
 
   /// 添加可选条件 — 只有 [condition] 不为空时才添加。
-  QueryBuilder whereIf(String condition, [Object? arg]) {
+  MyQueryBuilder whereIf(String condition, [Object? arg]) {
     if (condition.isNotEmpty) {
       where(condition, arg);
     }
@@ -40,25 +40,25 @@ class QueryBuilder {
   }
 
   /// 设置排序，如 `"createdAt DESC"`。
-  QueryBuilder orderBy(String order) {
+  MyQueryBuilder orderBy(String order) {
     _orderBy = order;
     return this;
   }
 
   /// 设置返回行数上限。
-  QueryBuilder limit(int limit) {
+  MyQueryBuilder limit(int limit) {
     _limit = limit;
     return this;
   }
 
   /// 设置偏移量（用于分页）。
-  QueryBuilder offset(int offset) {
+  MyQueryBuilder offset(int offset) {
     _offset = offset;
     return this;
   }
 
   /// 将另一个 QueryBuilder 的条件合并进来（不含 limit/offset）。
-  QueryBuilder merge(QueryBuilder other) {
+  MyQueryBuilder merge(MyQueryBuilder other) {
     _conditions.addAll(other._conditions);
     _args.addAll(other._args);
     if (other._orderBy != null) _orderBy = other._orderBy;

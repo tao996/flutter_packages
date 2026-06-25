@@ -1,4 +1,5 @@
 import '../reactive/rx_list.dart';
+import 'database.dart';
 import 'model.dart';
 import 'query_builder.dart';
 
@@ -22,13 +23,13 @@ import 'query_builder.dart';
 /// final items = RxList<Book>();
 /// await repo.bind(items, qb: QueryBuilder()..orderBy('createdAt DESC'));
 /// ```
-class Repository<T extends IModel> {
+class MyRepository<T extends IModel> {
   final IDatabaseService db;
   final String tableName;
   final T Function(Map<String, dynamic>) fromJson;
   final Map<String, dynamic> Function(T) toJson;
 
-  Repository({
+  MyRepository({
     required this.db,
     required this.tableName,
     required this.fromJson,
@@ -56,10 +57,10 @@ class Repository<T extends IModel> {
     return rows.map((r) => fromJson(r)).toList();
   }
 
-  /// 查询列表，支持 [QueryBuilder] 过滤/排序/分页。
+  /// 查询列表，支持 [MyQueryBuilder] 过滤/排序/分页。
   /// 始终过滤软删除记录（deletedAt IS NULL）。
-  Future<List<T>> query({QueryBuilder? qb}) async {
-    final baseQb = QueryBuilder()..where('deletedAt IS NULL');
+  Future<List<T>> query({MyQueryBuilder? qb}) async {
+    final baseQb = MyQueryBuilder()..where('deletedAt IS NULL');
     if (qb != null) baseQb.merge(qb);
     final sql = 'SELECT * FROM $tableName ${baseQb.build()}';
     final rows = await db.query(sql, baseQb.whereArgs);
@@ -70,10 +71,10 @@ class Repository<T extends IModel> {
   Future<PaginatedResult<T>> queryPaginated({
     int page = 1,
     int pageSize = 15,
-    QueryBuilder? qb,
+    MyQueryBuilder? qb,
   }) async {
     // Base filter (no limit/offset) for count
-    final countQb = QueryBuilder()..where('deletedAt IS NULL');
+    final countQb = MyQueryBuilder()..where('deletedAt IS NULL');
     if (qb != null) countQb.merge(qb);
     final countSql =
         'SELECT COUNT(*) as cnt FROM $tableName ${countQb.build()}';
@@ -81,7 +82,7 @@ class Repository<T extends IModel> {
     final total = (countRows.first['cnt'] as num?)?.toInt() ?? 0;
 
     // Paginated data
-    final dataQb = QueryBuilder()..where('deletedAt IS NULL');
+    final dataQb = MyQueryBuilder()..where('deletedAt IS NULL');
     if (qb != null) dataQb.merge(qb);
     dataQb.limit(pageSize).offset((page - 1) * pageSize);
     final sql = 'SELECT * FROM $tableName ${dataQb.build()}';
@@ -165,7 +166,7 @@ class Repository<T extends IModel> {
 
   /// 查询列表并绑定到 RxList。
   /// 返回取消绑定的函数。
-  Future<void Function()> bind(RxList<T> rxList, {QueryBuilder? qb}) async {
+  Future<void Function()> bind(RxList<T> rxList, {MyQueryBuilder? qb}) async {
     final items = await query(qb: qb);
     rxList.value = items;
     return () {}; // 当前为一次性绑定，后续可扩展为流式监听
@@ -188,23 +189,4 @@ class PaginatedResult<T extends IModel> {
 
   int get totalPages => (total / pageSize).ceil();
   bool get hasMore => page < totalPages;
-}
-
-/// IDatabaseService 接口（供 Repository 使用）。
-/// 实际实现在 tao996_flutter 层（使用 sqflite）。
-abstract class IDatabaseService {
-  Future<List<Map<String, dynamic>>> query(String sql, [List<Object?>? args]);
-
-  Future<int> execute(String sql, [List<Object?>? args]);
-
-  Future<void> executeBatch(List<SqlStatement> statements);
-
-  Future<void> close();
-}
-
-class SqlStatement {
-  final String sql;
-  final List<Object?>? args;
-
-  SqlStatement(this.sql, [this.args]);
 }

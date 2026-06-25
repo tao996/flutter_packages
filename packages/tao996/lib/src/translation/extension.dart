@@ -11,69 +11,71 @@ extension I18nExt on String {
 
   // 校验类：结构化处理
   String get mustRequired =>
-      i18n('mustRequired', '@title不能为空', params: {'title': this});
+      i18n('mustRequired', '@title 不能为空', params: {'title': this});
   String get mustString =>
-      i18n('mustString', '@title必须是字符串', params: {'title': this});
+      i18n('mustString', '@title 必须是字符串', params: {'title': this});
   String get mustInteger =>
-      i18n('mustInteger', '@title必须是整数', params: {'title': this});
+      i18n('mustInteger', '@title 必须是整数', params: {'title': this});
   String get mustBoolean =>
-      i18n('mustBoolean', '@title必须是布尔值', params: {'title': this});
+      i18n('mustBoolean', '@title 必须是布尔值', params: {'title': this});
   String get mustArray =>
-      i18n('mustArray', '@title必须是数组', params: {'title': this});
+      i18n('mustArray', '@title 必须是数组', params: {'title': this});
+  String get mustList =>
+      i18n('mustList', '@title 必须是列表', params: {'title': this});
   String get mustObject =>
-      i18n('mustObject', '@title必须是对象', params: {'title': this});
+      i18n('mustObject', '@title 必须是对象', params: {'title': this});
   String get mustEmail =>
-      i18n('mustEmail', '@title必须是电子邮箱地址', params: {'title': this});
+      i18n('mustEmail', '@title 必须是电子邮箱地址', params: {'title': this});
   String get mustPhone =>
-      i18n('mustPhone', '@title必须是手机号码', params: {'title': this});
+      i18n('mustPhone', '@title 必须是手机号码', params: {'title': this});
   String get mustRegexPattern =>
-      i18n('mustRegexPattern', '@title必须是有效的正则表达式', params: {'title': this});
+      i18n('mustRegexPattern', '@title 必须是有效的正则表达式', params: {'title': this});
 
   String mustLessThen(dynamic value) => i18n(
     'mustLessThen',
-    '@title必须小于@value',
+    '@title 必须小于 @value',
     params: {'title': this, 'value': value},
   );
   String mustGreatThen(dynamic value) => i18n(
     'mustGreatThen',
-    '@title必须大于@value',
+    '@title 必须大于 @value',
     params: {'title': this, 'value': value},
   );
   String mustNotLessThen(dynamic value) => i18n(
     'mustNotLessThen',
-    '@title不能小于@value',
+    '@title 不能小于 @value',
     params: {'title': this, 'value': value},
   );
   String mustNotGreatThen(dynamic value) => i18n(
     'mustNotGreatThen',
-    '@title不能大于@value',
+    '@title 不能大于 @value',
     params: {'title': this, 'value': value},
   );
   String minLength(int value) => i18n(
     'mustMinLength',
-    '@title长度不能小于@value',
+    '@title 长度不能小于 @value',
     params: {'title': this, 'value': value},
   );
   String maxLength(int value) => i18n(
     'mustMaxLength',
-    '@title长度不能大于@value',
+    '@title 长度不能大于 @value',
     params: {'title': this, 'value': value},
   );
   String mustBetween(dynamic min, dynamic max) => i18n(
     'mustBetween',
-    '@title必须在@min和@max之间',
+    '@title 必须在 @min 和 @max 之间',
     params: {'title': this, 'min': min, 'max': max},
   );
   String get invalid =>
       i18n('invalid', '验证失败:@reason', params: {'reason': this});
   String get mustSelected =>
-      i18n('mustSelected', '必须选择一个@title', params: {'title': this});
+      i18n('mustSelected', '必须选择一个 @title', params: {'title': this});
   String get isRepeat => i18n('isRepeat', '重复的@title', params: {'title': this});
   String get errorPattern =>
-      i18n('errorPattern', '@title格式错误', params: {'title': this});
+      i18n('errorPattern', '@title 格式错误', params: {'title': this});
   String get isExist => i18n('isExist', '@title已存在', params: {'title': this});
   String get isNotExist =>
-      i18n('isNotExist', '@title不存在', params: {'title': this});
+      i18n('isNotExist', '@title 不存在', params: {'title': this});
   String get noRecordFound =>
       i18n('noRecordFound', '没有找到符合条件的@title', params: {'title': this});
   String get noRecord => i18n('noRecord', '暂无@title', params: {'title': this});

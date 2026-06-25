@@ -1,4 +1,4 @@
-import 'repository.dart';
+import 'database.dart';
 
 /// 数据库迁移模块接口。
 ///
@@ -27,12 +27,12 @@ abstract class Migration {
 }
 
 /// 迁移执行器。
-class Migrator {
+class MyMigrator {
   final IDatabaseService _db;
   final List<Migration> _modules;
   final int targetVersion;
 
-  Migrator(this._db, this._modules, {this.targetVersion = 1});
+  MyMigrator(this._db, this._modules, {this.targetVersion = 1});
 
   /// 执行所有迁移。
   Future<void> execute() async {
