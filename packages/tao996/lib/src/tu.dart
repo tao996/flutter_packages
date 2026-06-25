@@ -39,7 +39,6 @@ class _TUtils {
   final jsondata = Jsondata.new;
 
   /// helper
-  final contextof = const ContextOfHelper();
   final dialog = const DialogHelper();
   final font = const FontHelper();
   final form = const FormHelper();

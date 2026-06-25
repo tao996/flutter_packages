@@ -1,7 +1,6 @@
 // app ----------------
 
 // app helper
-export 'src/app/helper/contextof.dart';
 export 'src/app/helper/dialog.dart';
 export 'src/app/helper/font.dart';
 export 'src/app/helper/form.dart';
@@ -64,6 +63,7 @@ export 'src/di/di.dart';
 // event
 export 'src/event/event_bus.dart';
 // extension
+export 'src/extension/context.dart';
 export 'src/extension/datetime.dart';
 export 'src/extension/widget.dart';
 // reactive
@@ -95,7 +95,6 @@ export 'src/utils/validator.dart';
 // root
 export 'src/exception.dart';
 export 'src/function.dart';
-export 'src/global.dart';
 export 'src/icon.dart';
 export 'src/result.dart';
 export 'src/space.dart';

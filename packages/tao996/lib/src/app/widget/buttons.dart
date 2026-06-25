@@ -254,7 +254,10 @@ class MyDeleteButton extends StatelessWidget {
   Widget build(BuildContext context) => MyButton(
     text: i18n('delete', '删除'),
     onPressed: onPressed,
-    icon: Icon(Icons.delete_outline, color: tu.color.danger),
+    icon: Icon(
+      Icons.delete_outline,
+      color: tu.color.danger(context.colorScheme),
+    ),
     status: MyButtonStatus.danger,
   );
 }
@@ -380,7 +383,10 @@ class MyDeleteIconButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => IconButton(
-    icon: Icon(Icons.delete_outline, color: tu.color.danger),
+    icon: Icon(
+      Icons.delete_outline,
+      color: tu.color.danger(context.colorScheme),
+    ),
     onPressed: onPressed,
     tooltip: tooltip ?? i18n('delete', '删除'),
   );

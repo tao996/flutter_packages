@@ -1,5 +1,7 @@
 import 'dart:convert';
 
+import 'package:tao996/tao996.dart';
+
 /// JSON 工具 — 深合并、路径访问、格式化、安全解析。
 class JsonUtil {
   const JsonUtil();
@@ -56,7 +58,11 @@ class JsonUtil {
 
   /// 通过点分隔路径获取值，如 `getByPath(data, 'user.address.city')`。
   /// 路径不存在时返回 [defaultValue]。
-  dynamic getByPath(Map<String, dynamic> data, String path, {dynamic defaultValue}) {
+  dynamic getByPath(
+    Map<String, dynamic> data,
+    String path, {
+    dynamic defaultValue,
+  }) {
     final keys = path.split('.');
     dynamic current = data;
 
@@ -97,9 +103,7 @@ class JsonUtil {
 
   /// 过滤掉 Map 中值为 null 的键。
   Map<String, dynamic> compact(Map<String, dynamic> data) {
-    return Map.fromEntries(
-      data.entries.where((e) => e.value != null),
-    );
+    return Map.fromEntries(data.entries.where((e) => e.value != null));
   }
 }
 
@@ -130,8 +134,9 @@ class JsonSchema {
       final value = data[key];
 
       // 必填检查
-      if (field.required && (value == null || (value is String && value.trim().isEmpty))) {
-        errors.add('$key 是必填字段');
+      if (field.required &&
+          (value == null || (value is String && value.trim().isEmpty))) {
+        errors.add(key.mustRequired);
         continue;
       }
 
@@ -141,31 +146,40 @@ class JsonSchema {
       switch (field.type) {
         case SchemaFieldType.string:
           if (value is! String) {
-            errors.add('$key 必须是字符串');
-          } else if (field.pattern != null && !RegExp(field.pattern!).hasMatch(value)) {
-            errors.add('$key 格式不正确');
+            errors.add(key.mustString);
+          } else if (field.pattern != null &&
+              !RegExp(field.pattern!).hasMatch(value)) {
+            errors.add(key.errorPattern);
           }
         case SchemaFieldType.int:
           if (value is! int) {
-            errors.add('$key 必须是整数');
+            errors.add(key.mustInteger);
           } else {
-            if (field.min != null && value < field.min!) errors.add('$key 不能小于 ${field.min}');
-            if (field.max != null && value > field.max!) errors.add('$key 不能大于 ${field.max}');
+            if (field.min != null && value < field.min!) {
+              errors.add(key.mustNotLessThen(field.min));
+            }
+            if (field.max != null && value > field.max!) {
+              errors.add(key.mustNotGreatThen(field.max));
+            }
           }
         case SchemaFieldType.double:
           if (value is! num) {
-            errors.add('$key 必须是数字');
+            errors.add(key.mustInteger);
           } else {
             final num = value.toDouble();
-            if (field.min != null && num < field.min!) errors.add('$key 不能小于 ${field.min}');
-            if (field.max != null && num > field.max!) errors.add('$key 不能大于 ${field.max}');
+            if (field.min != null && num < field.min!) {
+              errors.add(key.mustNotLessThen(field.min));
+            }
+            if (field.max != null && num > field.max!) {
+              errors.add(key.mustNotGreatThen(field.max));
+            }
           }
         case SchemaFieldType.bool:
-          if (value is! bool) errors.add('$key 必须是布尔值');
+          if (value is! bool) errors.add(key.mustBoolean);
         case SchemaFieldType.list:
-          if (value is! List) errors.add('$key 必须是数组');
+          if (value is! List) errors.add(key.mustArray);
         case SchemaFieldType.map:
-          if (value is! Map) errors.add('$key 必须是对象');
+          if (value is! Map) errors.add(key.mustObject);
       }
     }
 
@@ -193,34 +207,38 @@ class JsonField {
     this.max,
   });
 
-  const JsonField.string({this.required = false, this.pattern, this.min, this.max})
-      : type = SchemaFieldType.string;
+  const JsonField.string({
+    this.required = false,
+    this.pattern,
+    this.min,
+    this.max,
+  }) : type = SchemaFieldType.string;
 
   const JsonField.int({this.required = false, this.min, this.max})
-      : type = SchemaFieldType.int,
-        pattern = null;
+    : type = SchemaFieldType.int,
+      pattern = null;
 
   const JsonField.double({this.required = false, this.min, this.max})
-      : type = SchemaFieldType.double,
-        pattern = null;
+    : type = SchemaFieldType.double,
+      pattern = null;
 
   const JsonField.bool({this.required = false})
-      : type = SchemaFieldType.bool,
-        pattern = null,
-        min = null,
-        max = null;
+    : type = SchemaFieldType.bool,
+      pattern = null,
+      min = null,
+      max = null;
 
   const JsonField.list({this.required = false})
-      : type = SchemaFieldType.list,
-        pattern = null,
-        min = null,
-        max = null;
+    : type = SchemaFieldType.list,
+      pattern = null,
+      min = null,
+      max = null;
 
   const JsonField.map({this.required = false})
-      : type = SchemaFieldType.map,
-        pattern = null,
-        min = null,
-        max = null;
+    : type = SchemaFieldType.map,
+      pattern = null,
+      min = null,
+      max = null;
 }
 
 /// Schema 校验结果。

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:tao996/src/global.dart';
 
 /// 颜色工具类 - 提供颜色解析、转换、透明度判断等功能。
 ///
@@ -34,26 +33,26 @@ class ColorUtil {
   }
 
   /// 代表成功的颜色，通常用于表示成功、完成、通过等操作。
-  Color get success => myGlobal.colorScheme.secondary;
+  Color success(ColorScheme colorScheme) => colorScheme.secondary;
 
   /// 代表失败的颜色，通常用于表示失败、错误、拒绝等操作。
-  Color get error => myGlobal.colorScheme.error;
+  Color error(ColorScheme colorScheme) => colorScheme.error;
 
   /// 危险颜色（error 的别名）。
-  Color get danger => myGlobal.colorScheme.error;
+  Color danger(ColorScheme colorScheme) => colorScheme.error;
 
   /// 高亮或信息提示颜色。
-  Color get info => myGlobal.colorScheme.primary;
+  Color info(ColorScheme colorScheme) => colorScheme.primary;
 
   /// 警告颜色。
-  Color get warning => myGlobal.colorScheme.tertiary;
+  Color warning(ColorScheme colorScheme) => colorScheme.tertiary;
 
   /// 背景、表面式，常用于 AlertDialog
-  Color get surface => myGlobal.colorScheme.surface;
+  Color surface(ColorScheme colorScheme) => colorScheme.surface;
 
   /// 文本颜色，带透明度。[opacity] 范围 0.0-1.0。
-  Color textColor(double opacity) =>
-      myGlobal.colorScheme.onSurface.withAlpha((255 * opacity).toInt());
+  Color textColor(double opacity, ColorScheme colorScheme) =>
+      colorScheme.onSurface.withAlpha((255 * opacity).toInt());
 
   /// 将十六进制颜色字符串转换为 Color。
   ///

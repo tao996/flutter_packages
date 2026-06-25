@@ -10,11 +10,41 @@ extension I18nExt on String {
   // 校验类：结构化处理
   String get mustRequired =>
       i18n('mustRequired', '@title不能为空', params: {'title': this});
+  String get mustString =>
+      i18n('mustString', '@title必须是字符串', params: {'title': this});
   String get mustInteger =>
       i18n('mustInteger', '@title必须是整数', params: {'title': this});
+  String get mustBoolean =>
+      i18n('mustBoolean', '@title必须是布尔值', params: {'title': this});
+  String get mustArray =>
+      i18n('mustArray', '@title必须是数组', params: {'title': this});
+  String get mustObject =>
+      i18n('mustObject', '@title必须是对象', params: {'title': this});
+  String mustLessThen(dynamic value) => i18n(
+    'mustLessThen',
+    '@title必须小于@value',
+    params: {'title': this, 'value': value},
+  );
+  String mustGreatThen(dynamic value) => i18n(
+    'mustGreatThen',
+    '@title必须大于@value',
+    params: {'title': this, 'value': value},
+  );
+  String mustNotLessThen(dynamic value) => i18n(
+    'mustNotLessThen',
+    '@title不能小于@value',
+    params: {'title': this, 'value': value},
+  );
+  String mustNotGreatThen(dynamic value) => i18n(
+    'mustNotGreatThen',
+    '@title不能大于@value',
+    params: {'title': this, 'value': value},
+  );
   String get mustSelected =>
       i18n('mustSelected', '必须选择一个@title', params: {'title': this});
   String get isRepeat => i18n('isRepeat', '重复的@title', params: {'title': this});
+  String get errorPattern =>
+      i18n('errorPattern', '@title格式错误', params: {'title': this});
   String get isExist => i18n('isExist', '@title已存在', params: {'title': this});
   String get isNotExist =>
       i18n('isNotExist', '@title不存在', params: {'title': this});
